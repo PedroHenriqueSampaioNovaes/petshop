@@ -1,0 +1,19 @@
+{
+  "name": "petshop",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "npm run dev --workspaces",
+    "build": "npm run build --workspaces",
+    "dev:web": "npm run dev --workspaces web",
+    "dev:server": "npm run dev --workspaces server"
+  },
+  "keywords": [],
+  "author": "Pedro Henrique Sampaio de Novaes",
+  "license": "ISC",
+  "description": "",
+  "workspaces": [
+    "server",
+    "web"
+  ]
+}
