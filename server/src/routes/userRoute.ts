@@ -8,4 +8,7 @@ router.post('/register', CreateUserController.handle);
 // router.post('/session', LoginUserController.handle);
 
 // router.get('/me', isAuthenticated, DetailUserController.handle);
-export { router };
+
+const baseURL = '/user';
+
+export { router, baseURL };
