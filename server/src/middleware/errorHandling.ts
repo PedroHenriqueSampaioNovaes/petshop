@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import z, { ZodError } from 'zod';
 
 import ApiError from '../utils/ApiError.js';
 
@@ -10,6 +11,13 @@ export default function errorHandling(
 ) {
   if (err instanceof ApiError) {
     res.status(err.error).json({ ok: false, message: err.message });
+    return;
+  }
+
+  if (err instanceof ZodError) {
+    res
+      .status(422)
+      .json({ ok: false, message: z.flattenError(err).fieldErrors });
     return;
   }
 
