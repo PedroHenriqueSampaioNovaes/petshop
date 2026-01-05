@@ -23,7 +23,10 @@ export class LoginUserService {
           email: user.email,
           _id: user._id,
         },
-        process.env.TOKEN_SECRET as string
+        process.env.TOKEN_SECRET as string,
+        {
+          expiresIn: '7d',
+        }
       );
 
       const userData = {
