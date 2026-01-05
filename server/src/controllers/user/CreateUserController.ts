@@ -8,7 +8,7 @@ export class CreateUserController {
     const userData = z
       .object({
         name: z.string().min(3),
-        email: z.email(),
+        email: z.email('Insira um e-mail válido.'),
         phone: z.string(),
         password: z.string(),
         confirm: z.string(),
