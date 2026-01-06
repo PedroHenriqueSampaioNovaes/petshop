@@ -1,7 +1,7 @@
-const mongoose = require('../db/conn');
+import mongoose from '../db/conn.js';
 const { Schema } = mongoose;
 
-const imagesSchema = Schema({
+const imagesSchema = new Schema({
   data: { type: String, required: true },
   contentType: { type: String, required: true },
 });
