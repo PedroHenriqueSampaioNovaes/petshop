@@ -21,6 +21,6 @@ export class CreateUserController {
 
     const user = await CreateUserService.execute(userData);
 
-    return res.json({ email: user.email, password: user.password });
+    return res.status(201).json({ email: user.email, password: user.password });
   }
 }
