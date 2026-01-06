@@ -29,10 +29,17 @@ const petSchema = new Schema(
       required: true,
     },
     castrationStatus: {
-      type: String,
+      type: Boolean,
       required: true,
     },
-    location: { state: String, municipality: String },
+    location: {
+      type: {
+        state: String,
+        municipality: String,
+      },
+      required: true,
+      _id: false,
+    },
     description: {
       type: String,
       required: true,
@@ -41,9 +48,7 @@ const petSchema = new Schema(
       type: [imagesSchema],
       required: true,
     },
-    available: {
-      type: Boolean,
-    },
+    available: Boolean,
     user: Object,
     adopter: Object,
   },
