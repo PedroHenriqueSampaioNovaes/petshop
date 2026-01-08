@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import z, { ZodError } from 'zod';
+import { MulterError } from 'multer';
 
 import ApiError from '../utils/ApiError.js';
 
@@ -20,6 +21,11 @@ export default function errorHandling(
       message: z.flattenError(err).formErrors[0] || '',
       fields: z.flattenError(err).fieldErrors,
     });
+    return;
+  }
+
+  if (err instanceof MulterError) {
+    res.status(Number(err.code)).json({ ok: false, error: err.message });
     return;
   }
 
