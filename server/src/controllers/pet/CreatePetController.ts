@@ -38,7 +38,7 @@ export class CreatePetController {
               .parse(parsed);
           } catch (error) {
             ctx.addIssue({
-              code: z.ZodIssueCode.custom,
+              code: 'custom',
               message:
                 'Location deve ser uma string JSON válida com state e municipality',
             });
