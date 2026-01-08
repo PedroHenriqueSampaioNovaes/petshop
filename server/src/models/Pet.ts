@@ -1,11 +1,6 @@
 import mongoose from '../db/conn.js';
 const { Schema } = mongoose;
 
-const imagesSchema = new Schema({
-  data: { type: String, required: true },
-  contentType: { type: String, required: true },
-});
-
 const petSchema = new Schema(
   {
     name: {
@@ -45,8 +40,14 @@ const petSchema = new Schema(
       required: true,
     },
     images: {
-      type: [imagesSchema],
+      type: [
+        {
+          url: String,
+          public_id: String,
+        },
+      ],
       required: true,
+      _id: false,
     },
     available: Boolean,
     user: Object,
