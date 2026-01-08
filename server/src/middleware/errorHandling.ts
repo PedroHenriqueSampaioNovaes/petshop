@@ -15,9 +15,11 @@ export default function errorHandling(
   }
 
   if (err instanceof ZodError) {
-    res
-      .status(422)
-      .json({ ok: false, message: z.flattenError(err).fieldErrors });
+    res.status(422).json({
+      ok: false,
+      message: z.flattenError(err).formErrors[0] || '',
+      fields: z.flattenError(err).fieldErrors,
+    });
     return;
   }
 
