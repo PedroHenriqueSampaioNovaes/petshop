@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import z, { string } from 'zod';
+import z from 'zod';
 
 import { MulterImageData } from '../../@types/image.js';
 
