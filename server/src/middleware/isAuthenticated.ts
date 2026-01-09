@@ -9,7 +9,7 @@ export default function isAuthenticated(
   next: NextFunction
 ) {
   const authorization = req.headers.authorization;
-  if (!authorization) throw new ApiError('Token inválido.', 400);
+  if (!authorization) throw new ApiError('Token inválido.', 401);
 
   const token = authorization.split(' ')[1];
 
@@ -22,6 +22,6 @@ export default function isAuthenticated(
 
     next();
   } catch (error) {
-    throw new ApiError('Token inválido.', 400);
+    throw new ApiError('Token inválido.', 401);
   }
 }
