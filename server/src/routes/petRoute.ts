@@ -6,6 +6,7 @@ import { createUploadImage } from '../middleware/uploadImage.js';
 import { CreatePetController } from '../controllers/pet/CreatePetController.js';
 import { ListAllPetsController } from '../controllers/pet/ListAllPetsController.js';
 import { ListAllUserPetsController } from '../controllers/pet/ListAllUserPetsController.js';
+import { GetPetController } from '../controllers/pet/GetPetController.js';
 
 const router = Router();
 
@@ -18,7 +19,7 @@ router.post(
 router.get('/', ListAllPetsController.handle);
 router.get('/mypets', isAuthenticated, ListAllUserPetsController.handle);
 // router.get('/myadoptions', isAuthenticated, PetController.getAllUserAdoptions);
-// router.get('/:id', PetController.getPetById);
+router.get('/:id', GetPetController.handle);
 // router.delete('/:id', isAuthenticated, PetController.removePetById);
 // router.patch(
 //   '/:id',
