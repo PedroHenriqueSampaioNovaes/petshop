@@ -2,16 +2,6 @@ import z from 'zod';
 
 import { MulterImageData } from '../@types/image.js';
 
-export const multerImageDataSchema = z.object({
-  fieldname: z.string(),
-  originalname: z.string(),
-  encoding: z.string(),
-  mimetype: z.string(),
-  path: z.string(),
-  size: z.number(),
-  filename: z.string(),
-}) satisfies z.ZodType<MulterImageData>;
-
 export const createPetSchema = z.object({
   name: z.string().min(2),
   age: z.coerce.number().min(0),
@@ -41,10 +31,19 @@ export const createPetSchema = z.object({
   }),
 });
 
-export const petImagesSchema = z.array(
-  multerImageDataSchema,
-  'É necessário enviar pelo menos 1 imagem do pet'
-);
+export const multerImageDataSchema = z.object({
+  fieldname: z.string(),
+  originalname: z.string(),
+  encoding: z.string(),
+  mimetype: z.string(),
+  path: z.string(),
+  size: z.number(),
+  filename: z.string(),
+}) satisfies z.ZodType<MulterImageData>;
+
+export const petImagesSchema = z
+  .array(multerImageDataSchema)
+  .min(1, 'É necessário enviar pelo menos 1 imagem do pet');
 
 export const listPetSchema = z.object({
   petsPerPage: z.coerce
