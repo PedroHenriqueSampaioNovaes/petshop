@@ -1,4 +1,4 @@
-export default class ErrorHandling {
+export default class ApiError {
   public message: string;
   public error: number;
 
