@@ -9,10 +9,10 @@ interface ListAllData {
 
 export class ListAllUserPetsService {
   static async execute({ userId }: ListAllData) {
-    try {
-      const user = await User.findById(userId);
-      if (!user) throw new ApiError('Usuário não encontrado.', 404);
+    const user = await User.findById(userId);
+    if (!user) throw new ApiError('Usuário não encontrado.', 404);
 
+    try {
       const pets = await Pet.find({ 'user._id': user._id }).sort('-createdAt');
 
       return pets;
