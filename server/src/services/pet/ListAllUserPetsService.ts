@@ -11,7 +11,7 @@ export class ListAllUserPetsService {
   static async execute({ userId }: ListAllData) {
     try {
       const user = await User.findById(userId);
-      if (!user) throw new ApiError('Usuário não encontrado.');
+      if (!user) throw new ApiError('Usuário não encontrado.', 404);
 
       const pets = await Pet.find({ 'user._id': user._id }).sort('-createdAt');
 
