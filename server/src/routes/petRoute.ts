@@ -5,6 +5,7 @@ import { createUploadImage } from '../middleware/uploadImage.js';
 
 import { CreatePetController } from '../controllers/pet/CreatePetController.js';
 import { ListAllPetsController } from '../controllers/pet/ListAllPetsController.js';
+import { ListAllUserPetsController } from '../controllers/pet/ListAllUserPetsController.js';
 
 const router = Router();
 
@@ -15,7 +16,7 @@ router.post(
   CreatePetController.handle
 );
 router.get('/', ListAllPetsController.handle);
-// router.get('/mypets', isAuthenticated, PetController.getAllUserPets);
+router.get('/mypets', isAuthenticated, ListAllUserPetsController.handle);
 // router.get('/myadoptions', isAuthenticated, PetController.getAllUserAdoptions);
 // router.get('/:id', PetController.getPetById);
 // router.delete('/:id', isAuthenticated, PetController.removePetById);
