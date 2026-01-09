@@ -1,7 +1,43 @@
 import mongoose from '../db/conn.js';
 const { Schema } = mongoose;
 
-const petSchema = new Schema(
+export interface IPet {
+  name: string;
+  age: number;
+  weight: number;
+  gender: string;
+  breed: string;
+  castrationStatus: boolean;
+  location: {
+    state: string;
+    municipality: string;
+  };
+  description: string;
+  images: {
+    url: string;
+    public_id: string;
+  }[];
+  available: boolean;
+  user: {
+    _id: mongoose.Types.ObjectId;
+    name: string;
+    image: string;
+    phone: string;
+  };
+  adopter: {
+    _id: mongoose.Types.ObjectId;
+    name: string;
+    image: {
+      url: string;
+      public_id: string;
+    };
+  };
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+}
+
+const petSchema = new Schema<IPet>(
   {
     name: {
       type: String,
@@ -56,6 +92,6 @@ const petSchema = new Schema(
   { timestamps: true }
 );
 
-const Pet = mongoose.model('Pet', petSchema);
+const Pet = mongoose.model<IPet>('Pet', petSchema);
 
 export default Pet;
