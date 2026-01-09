@@ -45,3 +45,15 @@ export const petImagesSchema = z.array(
   multerImageDataSchema,
   'É necessário enviar pelo menos 1 imagem do pet'
 );
+
+export const listPetSchema = z.object({
+  petsPerPage: z.coerce
+    .number('É obrigatório enviar a quantidade de pets por página')
+    .default(8),
+  currentCursor: z.coerce
+    .date(
+      'A data tem que estar no formato de ISO em string. Converta a ISO pra string com .toISOString()'
+    )
+    .nullable()
+    .optional(),
+});
