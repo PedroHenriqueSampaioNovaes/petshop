@@ -102,7 +102,7 @@ export class UpdatePetService {
       await Pet.findByIdAndUpdate(pet._id, updatedData);
       return { message: 'Pet atualizado com sucesso.' };
     } catch (err) {
-      throw new ApiError('Erro ao remover pet.', 500);
+      throw new ApiError('Erro ao atualizar o pet.', 500);
     }
   }
 }
