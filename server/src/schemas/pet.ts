@@ -1,6 +1,6 @@
 import z from 'zod';
 
-import { MulterImageData } from '../@types/image.js';
+import { MulterMemoryFile } from '../@types/image.js';
 
 export const createPetSchema = z.object({
   name: z.string().min(2),
@@ -36,12 +36,11 @@ export const multerImageDataSchema = z.object({
   originalname: z.string(),
   encoding: z.string(),
   mimetype: z.string(),
-  path: z.string(),
+  buffer: z.instanceof(Buffer),
   size: z.number(),
-  filename: z.string(),
-}) satisfies z.ZodType<MulterImageData>;
+}) satisfies z.ZodType<MulterMemoryFile>;
 
-export const petImagesSchema = z
+export const petMulterImagesSchema = z
   .array(multerImageDataSchema)
   .min(1, 'É necessário enviar pelo menos 1 imagem do pet');
 
