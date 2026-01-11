@@ -8,6 +8,7 @@ import { ListAllPetsController } from '../controllers/pet/ListAllPetsController.
 import { ListAllUserPetsController } from '../controllers/pet/ListAllUserPetsController.js';
 import { GetPetController } from '../controllers/pet/GetPetController.js';
 import { RemovePetController } from '../controllers/pet/RemovePetController.js';
+import { UpdatePetController } from '../controllers/pet/UpdatePetController.js';
 
 const router = Router();
 
@@ -24,13 +25,13 @@ router.get('/mypets', isAuthenticated, ListAllUserPetsController.handle);
 router.get('/:id', GetPetController.handle);
 
 router.delete('/:id', isAuthenticated, RemovePetController.handle);
-// router.patch(
-//   '/:id',
-//   isAuthenticated,
-//   createUploadImage('pets').array('images'),
-//   // errorHandler,
-//   PetController.updatePet
-// );
+
+router.patch(
+  '/:id',
+  isAuthenticated,
+  upload.array('images'),
+  UpdatePetController.handle
+);
 // router.patch('/schedule/:id', isAuthenticated, PetController.schedule);
 // router.patch('/conclude/:id', isAuthenticated, PetController.concludeAdoption);
 
