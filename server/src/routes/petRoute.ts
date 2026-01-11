@@ -10,6 +10,7 @@ import { GetPetController } from '../controllers/pet/GetPetController.js';
 import { RemovePetController } from '../controllers/pet/RemovePetController.js';
 import { UpdatePetController } from '../controllers/pet/UpdatePetController.js';
 import { SchedulePetController } from '../controllers/pet/SchedulePetController.js';
+import { AllUserAdoptionsPetController } from '../controllers/pet/AllUserAdoptionsPetController.js';
 
 const router = Router();
 
@@ -22,7 +23,7 @@ router.post(
 
 router.get('/', ListAllPetsController.handle);
 router.get('/mypets', isAuthenticated, ListAllUserPetsController.handle);
-// router.get('/myadoptions', isAuthenticated, PetController.getAllUserAdoptions);
+router.get('/myadoptions', isAuthenticated, AllUserAdoptionsPetController.handle);
 router.get('/:id', GetPetController.handle);
 
 router.delete('/:id', isAuthenticated, RemovePetController.handle);
