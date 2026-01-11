@@ -8,7 +8,7 @@ export const createPetSchema = z.object({
   weight: z.coerce.number(),
   description: z.string(),
   breed: z.string(),
-  gender: z.string(),
+  gender: z.enum(['macho', 'fêmea']),
   castrationStatus: z
     .enum(['true', 'false'], {
       message: 'castrationStatus deve ser "true" ou "false"',
