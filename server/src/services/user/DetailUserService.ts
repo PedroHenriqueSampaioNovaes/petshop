@@ -10,6 +10,7 @@ export class DetailUserService {
     const user = await User.findById(userId).select(
       '-password -createdAt -updatedAt -__v'
     );
-    if (!user) throw new ApiError('Usuário não encontrado.');
+
+    return user;
   }
 }
