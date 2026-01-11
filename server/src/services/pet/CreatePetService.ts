@@ -3,22 +3,11 @@ import User from '../../models/User.js';
 
 import ApiError from '../../utils/ApiError.js';
 
-import { MulterImageData } from '../../@types/image.js';
+import { IPetMulterDataRequest } from '../../@types/pet.js';
+import uploadImageToCloudinary from '../../utils/uploadImageToCloudinary.js';
 
-interface PetData {
+interface CreatePetData extends IPetMulterDataRequest {
   userId: string;
-  name: string;
-  age: number;
-  weight: number;
-  images: MulterImageData[];
-  description: string;
-  breed: string;
-  gender: string;
-  castrationStatus: boolean;
-  location: {
-    state: string;
-    municipality: string;
-  };
 }
 
 export class CreatePetService {
@@ -33,14 +22,23 @@ export class CreatePetService {
     gender,
     castrationStatus,
     location,
-  }: PetData) {
+  }: CreatePetData) {
     const user = await User.findById(userId);
     if (!user) throw new ApiError('Usuário não encontrado!', 401);
 
-    const imagesData = images.map(({ path, filename }) => ({
-      url: path,
-      public_id: filename,
-    }));
+    // upload pet images on the cloudinary
+    const uploads = images.map((image) => {
+      return uploadImageToCloudinary(image, 'pets');
+    });
+
+    const imagesData: { url: string; public_id: string }[] = [];
+    const uploadedImages = await Promise.all(uploads);
+    uploadedImages.forEach((result) => {
+      imagesData.push({
+        url: result.secure_url,
+        public_id: result.public_id,
+      });
+    });
 
     const pet = new Pet({
       name,

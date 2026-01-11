@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import isAuthenticated from '../middleware/isAuthenticated.js';
-import { createUploadImage } from '../middleware/uploadImage.js';
+import { upload } from '../middleware/uploadImage.js';
 
 import { CreatePetController } from '../controllers/pet/CreatePetController.js';
 import { ListAllPetsController } from '../controllers/pet/ListAllPetsController.js';
@@ -14,9 +14,10 @@ const router = Router();
 router.post(
   '/create',
   isAuthenticated,
-  createUploadImage('pets').array('images'),
+  upload.array('images'),
   CreatePetController.handle
 );
+
 router.get('/', ListAllPetsController.handle);
 router.get('/mypets', isAuthenticated, ListAllUserPetsController.handle);
 // router.get('/myadoptions', isAuthenticated, PetController.getAllUserAdoptions);
