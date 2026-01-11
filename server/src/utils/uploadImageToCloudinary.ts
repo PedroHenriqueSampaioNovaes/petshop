@@ -5,7 +5,7 @@ import { MulterMemoryFile } from '../@types/image.js';
 
 export default function uploadImageToCloudinary(
   file: MulterMemoryFile,
-  folder: string
+  folder: 'pets' | 'users'
 ): Promise<UploadApiResponse> {
   return new Promise((resolve, reject) => {
     const uploadStream = cloudinary.uploader.upload_stream(
