@@ -1,4 +1,3 @@
-import ApiError from '../../utils/ApiError.js';
 import User from '../../models/User.js';
 
 interface UserData {
