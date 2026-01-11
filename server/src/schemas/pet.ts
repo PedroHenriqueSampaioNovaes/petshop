@@ -1,6 +1,6 @@
 import z from 'zod';
 
-import { MulterMemoryFile } from '../@types/image.js';
+import { multerImageDataSchema } from './multer.js';
 
 export const createPetSchema = z.object({
   name: z.string().min(2),
@@ -30,15 +30,6 @@ export const createPetSchema = z.object({
     }
   }),
 });
-
-export const multerImageDataSchema = z.object({
-  fieldname: z.string(),
-  originalname: z.string(),
-  encoding: z.string(),
-  mimetype: z.string(),
-  buffer: z.instanceof(Buffer),
-  size: z.number(),
-}) satisfies z.ZodType<MulterMemoryFile>;
 
 export const petMulterImagesSchema = z
   .array(multerImageDataSchema)
