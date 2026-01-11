@@ -1,15 +1,15 @@
 import Pet from '../../models/Pet.js';
-
-import ApiError from '../../utils/ApiError.js';
 import User from '../../models/User.js';
 
-interface UpdatePetData {
+import ApiError from '../../utils/ApiError.js';
+
+interface SchedulePetData {
   petId: string;
   userId: string;
 }
 
 export class SchedulePetService {
-  static async execute({ userId, petId }: UpdatePetData) {
+  static async execute({ userId, petId }: SchedulePetData) {
     const user = await User.findById(userId);
     if (!user) throw new ApiError('Usuário não encontrado.', 404);
 
