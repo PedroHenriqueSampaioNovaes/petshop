@@ -6,8 +6,8 @@ export interface IUser {
   email: string;
   password: string;
   image: {
-    data: string;
-    contentType: string;
+    url: string;
+    public_id: string;
   };
   phone: string;
   createdAt: Date;
@@ -30,8 +30,8 @@ const userSchema = new Schema<IUser>(
       required: true,
     },
     image: {
-      data: String,
-      contentType: String,
+      url: String,
+      public_id: String,
     },
     phone: {
       type: String,
