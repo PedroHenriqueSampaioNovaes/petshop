@@ -25,7 +25,12 @@ export default function errorHandling(
   }
 
   if (err instanceof MulterError) {
-    res.status(Number(err.code)).json({ ok: false, error: err.message });
+    res.status(500).json({
+      ok: false,
+      error:
+        'Ocorreu um erro ao processar a imagem. Certifique-se de ter enviado a quantidade permitida de imagem',
+      fields: [err.field],
+    });
     return;
   }
 
