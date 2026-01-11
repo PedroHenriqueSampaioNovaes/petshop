@@ -11,6 +11,7 @@ import { RemovePetController } from '../controllers/pet/RemovePetController.js';
 import { UpdatePetController } from '../controllers/pet/UpdatePetController.js';
 import { SchedulePetController } from '../controllers/pet/SchedulePetController.js';
 import { AllUserAdoptionsPetController } from '../controllers/pet/AllUserAdoptionsPetController.js';
+import { ConcludeAdoptionPetController } from '../controllers/pet/ConcludeAdoptionPetController.js';
 
 const router = Router();
 
@@ -23,7 +24,11 @@ router.post(
 
 router.get('/', ListAllPetsController.handle);
 router.get('/mypets', isAuthenticated, ListAllUserPetsController.handle);
-router.get('/myadoptions', isAuthenticated, AllUserAdoptionsPetController.handle);
+router.get(
+  '/myadoptions',
+  isAuthenticated,
+  AllUserAdoptionsPetController.handle
+);
 router.get('/:id', GetPetController.handle);
 
 router.delete('/:id', isAuthenticated, RemovePetController.handle);
@@ -35,7 +40,11 @@ router.patch(
   UpdatePetController.handle
 );
 router.patch('/schedule/:id', isAuthenticated, SchedulePetController.handle);
-// router.patch('/conclude/:id', isAuthenticated, PetController.concludeAdoption);
+router.patch(
+  '/conclude/:id',
+  isAuthenticated,
+  ConcludeAdoptionPetController.handle
+);
 
 const baseURL = '/pet';
 
