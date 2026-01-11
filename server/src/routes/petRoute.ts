@@ -9,6 +9,7 @@ import { ListAllUserPetsController } from '../controllers/pet/ListAllUserPetsCon
 import { GetPetController } from '../controllers/pet/GetPetController.js';
 import { RemovePetController } from '../controllers/pet/RemovePetController.js';
 import { UpdatePetController } from '../controllers/pet/UpdatePetController.js';
+import { SchedulePetController } from '../controllers/pet/SchedulePetController.js';
 
 const router = Router();
 
@@ -32,7 +33,7 @@ router.patch(
   upload.array('images'),
   UpdatePetController.handle
 );
-// router.patch('/schedule/:id', isAuthenticated, PetController.schedule);
+router.patch('/schedule/:id', isAuthenticated, SchedulePetController.handle);
 // router.patch('/conclude/:id', isAuthenticated, PetController.concludeAdoption);
 
 const baseURL = '/pet';
