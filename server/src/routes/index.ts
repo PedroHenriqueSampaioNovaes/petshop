@@ -8,6 +8,7 @@ const __dirname = path.dirname(__filename);
 const files = fs
   .readdirSync(path.resolve(__dirname))
   .filter((file) => file.indexOf('.') !== 0 && !/index.[ts|js]/.test(file));
+console.log(files)
 
 export default Promise.all(
   files.map(async (file) => {

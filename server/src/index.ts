@@ -6,6 +6,7 @@ import errorHandling from './middleware/errorHandling.js';
 import routesPromisse from './routes/index.js';
 
 const app = express();
+console.log('DB variável de ambiente:', process.env.DB)
 
 app.get('/ping', (req, res) => {
   res.send('pong');
