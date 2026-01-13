@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { Inter, Poppins } from 'next/font/google';
 import './globals.css';
 
+import Header from '@/src/shared/components/Header';
+
 const inter = Inter({
   variable: '--font-inter-sans',
   subsets: ['latin'],
@@ -30,6 +32,7 @@ export default function RootLayout({
         className={`${inter.variable} ${poppins.variable} antialiased font-primary`}
       >
         <div className="flex flex-col min-h-screen">
+          <Header />
           <main className="flex-1">{children}</main>
         </div>
       </body>
