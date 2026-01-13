@@ -1,0 +1,11 @@
+@import 'tailwindcss';
+
+@theme inline {
+  --font-primary: var(--font-inter-sans), Arial, Helvetica, sans-serif;
+  --font-secondary: var(--font-poppins), Arial, Helvetica, sans-serif;
+}
+
+@theme {
+  --color-primary: '#ffd400';
+  --color-secondary: '#16479d';
+}
