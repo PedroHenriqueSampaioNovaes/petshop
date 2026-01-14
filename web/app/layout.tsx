@@ -3,6 +3,7 @@ import { Inter, Poppins } from 'next/font/google';
 import './globals.css';
 
 import Header from '@/src/shared/components/Header';
+import Footer from '@/src/shared/components/Footer';
 
 const inter = Inter({
   variable: '--font-inter-sans',
@@ -34,6 +35,7 @@ export default function RootLayout({
         <div className="flex flex-col min-h-screen">
           <Header />
           <main className="flex-1">{children}</main>
+          <Footer />
         </div>
       </body>
     </html>
