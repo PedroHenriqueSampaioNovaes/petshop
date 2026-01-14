@@ -12,3 +12,7 @@
   --color-back-600: #666;
   --color-back-700: #444;
 }
+
+@utility container {
+  @apply mx-auto py-6 px-7.5;
+}
