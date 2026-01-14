@@ -3,15 +3,18 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
-    "dev": "npm run dev --workspaces",
+    "dev": "concurrently \"npm run dev:web\" \"npm run dev:server\"",
     "build": "npm run build --workspaces",
-    "dev:web": "npm run dev --workspaces web",
-    "dev:server": "npm run dev --workspaces server"
+    "dev:web": "npm run dev -w web",
+    "dev:server": "npm run dev -w server"
   },
   "keywords": [],
   "author": "Pedro Henrique Sampaio de Novaes",
   "license": "ISC",
   "description": "",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  },
   "workspaces": [
     "server",
     "web"
