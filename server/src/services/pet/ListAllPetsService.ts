@@ -2,7 +2,7 @@ import Pet from '../../models/Pet.js';
 
 interface QueryData {
   petsPerPage: number;
-  currentCursor?: NativeDate | null;
+  currentCursor: NativeDate | null;
 }
 
 export class ListAllPetsService {

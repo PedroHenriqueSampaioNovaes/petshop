@@ -39,10 +39,12 @@ export const listPetSchema = z.object({
   petsPerPage: z.coerce
     .number('É obrigatório enviar a quantidade de pets por página')
     .default(8),
-  currentCursor: z.coerce
-    .date(
-      'A data tem que estar no formato de ISO em string. Converta a ISO pra string com .toISOString()'
-    )
-    .nullable()
-    .optional(),
+  currentCursor: z.preprocess(
+    (val) => (val === 'null' ? null : val),
+    z.coerce
+      .date(
+        'A data tem que estar no formato de ISO em string. Converta a ISO para string com .toISOString()'
+      )
+      .nullable()
+  ),
 });
