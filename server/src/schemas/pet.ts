@@ -39,7 +39,7 @@ export const listPetSchema = z.object({
   petsPerPage: z.coerce
     .number('É obrigatório enviar a quantidade de pets por página')
     .default(8),
-  currentCursor: z.preprocess(
+  nextCursor: z.preprocess(
     (val) => (val === 'null' ? null : val),
     z.coerce
       .date(

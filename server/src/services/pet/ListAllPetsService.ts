@@ -2,13 +2,13 @@ import Pet from '../../models/Pet.js';
 
 interface QueryData {
   petsPerPage: number;
-  currentCursor: NativeDate | null;
+  nextCursor: NativeDate | null;
 }
 
 export class ListAllPetsService {
-  static async execute({ petsPerPage, currentCursor }: QueryData) {
+  static async execute({ petsPerPage, nextCursor }: QueryData) {
     try {
-      const query = currentCursor ? { createdAt: { $lt: currentCursor } } : {};
+      const query = nextCursor ? { createdAt: { $lt: nextCursor } } : {};
 
       const pets = await Pet.find(query)
         .sort('-createdAt')
@@ -20,9 +20,9 @@ export class ListAllPetsService {
         pets.pop();
       }
 
-      const nextCursor = hasNextPage ? pets[pets.length - 1].createdAt : null;
+      const newNextCursor = hasNextPage ? pets[pets.length - 1].createdAt : null;
 
-      return { pets, hasNextPage, nextCursor };
+      return { pets, hasNextPage, nextCursor: newNextCursor };
     } catch (err) {
       throw new Error(err as string);
     }
