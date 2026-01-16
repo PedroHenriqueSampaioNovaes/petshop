@@ -11,6 +11,8 @@
   --color-back-300: #eee;
   --color-back-600: #666;
   --color-back-700: #444;
+
+  --breakpoint-xs: 30rem;
 }
 
 @utility container {
