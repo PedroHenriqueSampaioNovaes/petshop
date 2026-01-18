@@ -3,21 +3,14 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import Logo from '../Logo';
+
 export default function Header() {
   const user = { name: '' };
 
   return (
     <header className="bg-primary px-6 max-md:px-3 py-4 max-md:py-2 rounded-b-lg flex justify-between items-center max-md:flex-col gap-y-2">
-      <div className="flex items-center gap-3">
-        <Image
-          src="/logo.png"
-          alt="Logo"
-          width={128}
-          height={128}
-          className="w-10"
-        />
-        <h2 className="text-2xl font-bold text-secondary">Adopt A Pet</h2>
-      </div>
+      <Logo />
 
       <nav>
         <ul className="flex items-center justify-center gap-2 flex-wrap">
