@@ -1,5 +1,9 @@
-interface FetchOptions extends Omit<RequestInit, 'method' | 'headers'> {
+interface FetchOptions extends Omit<
+  RequestInit,
+  'method' | 'headers' | 'body'
+> {
   token?: string;
+  body?: Record<string, unknown>;
 }
 
 export default class FetchApi {
@@ -49,7 +53,7 @@ export default class FetchApi {
     } catch {
       if (!response.ok) {
         throw new Error(
-          `Ocorreu um erro inesperado com o servidor. Tente novamente mais tarde.`
+          `Ocorreu um erro inesperado com o servidor. Tente novamente mais tarde.`,
         );
       }
     }
