@@ -8,9 +8,12 @@
 @theme {
   --color-primary: #ffd400;
   --color-secondary: #16479d;
-  --color-back-300: #eee;
+  --color-back-200: #eee;
+  --color-back-300: #dfdfdf;
+  --color-back-400: #CBCBCB;
   --color-back-600: #666;
   --color-back-700: #444;
+  --color-valid-500: #25b456;
 
   --breakpoint-xs: 30rem;
 }
