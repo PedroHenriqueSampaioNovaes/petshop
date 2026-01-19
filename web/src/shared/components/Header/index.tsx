@@ -5,6 +5,8 @@ import Link from 'next/link';
 
 import Logo from '../Logo';
 
+import Login from '@/app/_components/Login';
+
 export default function Header() {
   const user = { name: '' };
 
@@ -57,9 +59,7 @@ export default function Header() {
           ) : (
             <>
               <li>
-                <button className="px-3 py-2 rounded-md font-semibold leading-none text-secondary hover:text-white hover:bg-secondary transition cursor-pointer h-9">
-                  Entrar
-                </button>
+                <Login />
               </li>
               <li>
                 <button className="px-3 py-2 rounded-md font-semibold leading-none text-secondary hover:text-white hover:bg-secondary transition cursor-pointer h-9">

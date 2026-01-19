@@ -7,3 +7,9 @@ export function GET_PETS({ petsPerPage = 8, nextCursor = null }: IApiGetPets) {
     url: `${BASE_URL}/pet?petsPerPage=${petsPerPage}&nextCursor=${nextCursor}`,
   };
 }
+
+export function LOGIN() {
+  return {
+    url: `${BASE_URL}/user/session`,
+  };
+}
