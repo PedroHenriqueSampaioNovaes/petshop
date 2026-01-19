@@ -36,7 +36,7 @@ export default function Login({
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
   });
@@ -76,6 +76,7 @@ export default function Login({
           .
         </p>
       }
+      buttonIsDisabled={isSubmitting}
     >
       <Input
         placeholder="E-mail"
