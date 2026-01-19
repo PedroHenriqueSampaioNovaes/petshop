@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Toaster } from 'react-hot-toast';
 import { Inter, Poppins } from 'next/font/google';
 import './globals.css';
 
@@ -37,6 +38,8 @@ export default async function RootLayout({
           <main className="flex-1 container">{children}</main>
           <Footer />
         </div>
+
+        <Toaster />
       </body>
     </html>
   );
