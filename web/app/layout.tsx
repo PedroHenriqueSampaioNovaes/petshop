@@ -6,6 +6,8 @@ import './globals.css';
 import Header from '@/src/shared/components/Header';
 import Footer from '@/src/shared/components/Footer';
 
+import userGet from './actions/user-get';
+
 import { UserContextProvider } from '@/src/context/UserContext';
 
 const inter = Inter({
@@ -30,17 +32,19 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { data: user } = await userGet();
+
   return (
     <html lang="pt-br">
       <body
         className={`${inter.variable} ${poppins.variable} antialiased font-primary`}
       >
         <UserContextProvider userData={user}>
-        <div className="flex flex-col min-h-screen">
-          <Header />
-          <main className="flex-1 container">{children}</main>
-          <Footer />
-        </div>
+          <div className="flex flex-col min-h-screen">
+            <Header />
+            <main className="flex-1 container">{children}</main>
+            <Footer />
+          </div>
         </UserContextProvider>
 
         <Toaster />

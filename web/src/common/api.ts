@@ -13,3 +13,9 @@ export function LOGIN() {
     url: `${BASE_URL}/user/session`,
   };
 }
+
+export function USER_GET() {
+  return {
+    url: `${BASE_URL}/user/me`,
+  };
+}
