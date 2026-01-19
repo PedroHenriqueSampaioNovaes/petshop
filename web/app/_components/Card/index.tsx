@@ -15,7 +15,7 @@ export default function Card({
   location,
 }: IPet) {
   return (
-    <div className="rounded-2xl overflow-hidden border border-[#DFDFDF]">
+    <div className="rounded-2xl overflow-hidden border border-back-300">
       <Image
         src={images[0].url}
         alt={name}
