@@ -1,0 +1,70 @@
+'use client';
+
+import { HTMLInputTypeAttribute, ReactNode, useState } from 'react';
+import { Field } from '@base-ui/react/field';
+import { FieldValues, UseFormRegister, Path } from 'react-hook-form';
+
+import { MdOutlineVisibilityOff, MdOutlineVisibility } from 'react-icons/md';
+
+interface InputProps<T extends FieldValues> {
+  description?: string;
+  type?: HTMLInputTypeAttribute;
+  placeholder?: string;
+  error?: string;
+  Icon: ReactNode;
+  label: Path<T>;
+  register: UseFormRegister<T>;
+}
+
+export default function Input<T extends FieldValues>({
+  description,
+  type = 'text',
+  placeholder,
+  error,
+  Icon,
+  label,
+  register,
+}: InputProps<T>) {
+  const [visible, setVisible] = useState(false);
+
+  return (
+    <Field.Root>
+      <Field.Label className="flex items-center relative">
+        {Icon}
+        <Field.Control
+          required
+          type={visible ? 'text' : type}
+          placeholder={placeholder}
+          className="w-full border border-back-400 pl-10 h-10 rounded-lg font-secondary placeholder:text-back-600"
+          {...register(label)}
+        />
+        {type === 'password' &&
+          (visible ? (
+            <MdOutlineVisibility
+              className="absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer"
+              size={24}
+              onClick={() => setVisible(!visible)}
+              color="var(--color-back-700)"
+            />
+          ) : (
+            <MdOutlineVisibilityOff
+              className="absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer"
+              size={24}
+              onClick={() => setVisible(!visible)}
+              color="var(--color-back-700)"
+            />
+          ))}
+      </Field.Label>
+
+      <Field.Error className="text-sm text-red-800 mt-0.5" match={true}>
+        {error}
+      </Field.Error>
+
+      {description && (
+        <Field.Description className="text-sm text-gray-600">
+          {description}
+        </Field.Description>
+      )}
+    </Field.Root>
+  );
+}
