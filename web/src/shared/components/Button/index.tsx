@@ -10,7 +10,7 @@ interface ButtonProps extends ComponentProps<'button'> {
 export default function Button({ className, children, ...props }: ButtonProps) {
   return (
     <button
-      className={`block cursor-pointer bg-valid-500 hover:bg-valid-600 transition text-white font-bold h-12 w-full mt-4 rounded-lg ${className}`}
+      className={`block cursor-pointer bg-valid-500 hover:bg-valid-600 disabled:opacity-50 disabled:cursor-not-allowed transition text-white font-bold h-12 w-full mt-4 rounded-lg ${className}`}
       {...props}
     >
       {children}
