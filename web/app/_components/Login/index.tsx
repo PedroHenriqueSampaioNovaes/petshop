@@ -7,7 +7,7 @@ import z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import toast from 'react-hot-toast';
 
-import { MdOutlineVpnKey, MdPersonOutline } from 'react-icons/md';
+import { MdOutlineEmail, MdOutlineVpnKey } from 'react-icons/md';
 
 import login from '@/app/actions/login';
 
@@ -80,7 +80,7 @@ export default function Login({
       <Input
         placeholder="E-mail"
         Icon={
-          <MdPersonOutline
+          <MdOutlineEmail
             className="absolute left-2 top-1/2 -translate-y-1/2"
             size={24}
             color="var(--color-back-700)"
