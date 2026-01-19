@@ -4,7 +4,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export function GET_PETS({ petsPerPage = 8, nextCursor = null }: IApiGetPets) {
   return {
-    url: `${BASE_URL}/pet?petsPerPage=${petsPerPage}&nextCursor=${nextCursor}`,
+    url: `${BASE_URL}/pets?petsPerPage=${petsPerPage}&nextCursor=${nextCursor}`,
   };
 }
 
