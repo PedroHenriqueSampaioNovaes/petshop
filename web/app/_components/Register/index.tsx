@@ -16,11 +16,11 @@ import {
 } from 'react-icons/md';
 
 import userRegister from '@/app/actions/user-register';
+import login from '@/app/actions/login';
 
 import Input from '@/src/shared/components/Forms/Input';
 
 import AuthDialog from '../AuthDialog';
-import login from '@/app/actions/login';
 
 const registerSchema = z
   .object({
