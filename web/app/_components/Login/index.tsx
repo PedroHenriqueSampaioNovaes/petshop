@@ -79,6 +79,7 @@ export default function Login({
     >
       <Input
         placeholder="E-mail"
+        type="email"
         Icon={
           <MdOutlineEmail
             className="absolute left-2 top-1/2 -translate-y-1/2"
