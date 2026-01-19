@@ -46,6 +46,6 @@ router.patch(
   ConcludeAdoptionPetController.handle
 );
 
-const baseURL = '/pet';
+const baseURL = '/pets';
 
 export { router, baseURL };
