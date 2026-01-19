@@ -2,7 +2,7 @@
 
 import { HTMLInputTypeAttribute, ReactNode, useState } from 'react';
 import { Field } from '@base-ui/react/field';
-import { FieldValues, UseFormRegister, Path } from 'react-hook-form';
+import { FieldValues, UseFormRegisterReturn, FieldPath } from 'react-hook-form';
 
 import { MdOutlineVisibilityOff, MdOutlineVisibility } from 'react-icons/md';
 
@@ -12,8 +12,7 @@ interface InputProps<T extends FieldValues> {
   placeholder?: string;
   error?: string;
   Icon: ReactNode;
-  label: Path<T>;
-  register: UseFormRegister<T>;
+  register: UseFormRegisterReturn<FieldPath<T>>;
 }
 
 export default function Input<T extends FieldValues>({
@@ -22,7 +21,6 @@ export default function Input<T extends FieldValues>({
   placeholder,
   error,
   Icon,
-  label,
   register,
 }: InputProps<T>) {
   const [visible, setVisible] = useState(false);
@@ -36,7 +34,7 @@ export default function Input<T extends FieldValues>({
           type={visible ? 'text' : type}
           placeholder={placeholder}
           className="w-full border border-back-400 pl-10 h-10 rounded-lg font-secondary placeholder:text-back-600"
-          {...register(label)}
+          {...register}
         />
         {type === 'password' &&
           (visible ? (
