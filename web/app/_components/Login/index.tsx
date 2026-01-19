@@ -88,8 +88,7 @@ export default function Login({
             color="var(--color-back-700)"
           />
         }
-        label="email"
-        register={register}
+        register={register('email')}
         error={errors.email?.message}
       />
 
@@ -103,8 +102,7 @@ export default function Login({
             color="var(--color-back-700)"
           />
         }
-        label="password"
-        register={register}
+        register={register('password')}
         error={errors.password?.message}
       />
     </AuthDialog>
