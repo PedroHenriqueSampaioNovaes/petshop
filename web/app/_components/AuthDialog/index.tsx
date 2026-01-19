@@ -16,6 +16,8 @@ interface AuthDialogProps {
   ActionLinkMessage: ReactNode;
   reverseColumn?: boolean;
   children: ReactNode;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
 export default function AuthDialog({
@@ -27,9 +29,11 @@ export default function AuthDialog({
   submitText,
   children,
   reverseColumn = false,
+  open,
+  onOpenChange,
 }: AuthDialogProps) {
   return (
-    <Dialog.Root>
+    <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Trigger className="px-3 py-2 rounded-md font-semibold leading-none text-secondary hover:text-white hover:bg-secondary transition cursor-pointer h-9">
         {triggerText}
       </Dialog.Trigger>
@@ -52,7 +56,7 @@ export default function AuthDialog({
               </Dialog.Description>
             </form>
 
-            <div className="flex flex-col items-center max-lg:hidden">
+            <div className="flex-1 flex flex-col items-center max-lg:hidden">
               <Logo />
               {ImageAside}
             </div>

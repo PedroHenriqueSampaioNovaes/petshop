@@ -22,7 +22,17 @@ const loginSchema = z.object({
 
 type LoginSchema = z.infer<typeof loginSchema>;
 
-export default function Login() {
+interface LoginProps {
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  onRegisterClick?: () => void;
+}
+
+export default function Login({
+  open,
+  onOpenChange,
+  onRegisterClick,
+}: LoginProps) {
   const {
     register,
     handleSubmit,
@@ -51,10 +61,16 @@ export default function Login() {
         <Image src="/login-cat.png" width={292} height={312} alt="" />
       }
       submitText="Entrar"
+      open={open}
+      onOpenChange={onOpenChange}
       ActionLinkMessage={
         <p className="text-sm lg:text-right">
           Não tem conta?{' '}
-          <button className="text-secondary font-bold cursor-pointer">
+          <button
+            className="text-secondary font-bold cursor-pointer"
+            type="button"
+            onClick={onRegisterClick}
+          >
             Clique aqui
           </button>
           .

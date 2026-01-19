@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 
 import Logo from '../Logo';
@@ -10,6 +11,8 @@ import { useUser } from '@/src/context/UserContext';
 
 export default function Header() {
   const { user } = useUser();
+
+  const [openModal, setOpenModal] = useState<'login' | 'register' | null>(null);
 
   return (
     <header className="bg-primary px-6 max-md:px-3 py-4 max-md:py-2 rounded-b-lg flex justify-between items-center max-md:flex-col gap-y-2">
@@ -60,7 +63,13 @@ export default function Header() {
           ) : (
             <>
               <li>
-                <Login />
+                <Login
+                  open={openModal === 'login'}
+                  onOpenChange={(isOpen) =>
+                    setOpenModal(isOpen ? 'login' : null)
+                  }
+                  onRegisterClick={() => setOpenModal('register')}
+                />
               </li>
               <li>
                 <button className="px-3 py-2 rounded-md font-semibold leading-none text-secondary hover:text-white hover:bg-secondary transition cursor-pointer h-9">
