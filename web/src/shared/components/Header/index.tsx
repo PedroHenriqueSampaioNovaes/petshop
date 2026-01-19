@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Logo from '../Logo';
 
 import Login from '@/app/_components/Login';
+import Register from '@/app/_components/Register';
 
 import { useUser } from '@/src/context/UserContext';
 
@@ -72,9 +73,13 @@ export default function Header() {
                 />
               </li>
               <li>
-                <button className="px-3 py-2 rounded-md font-semibold leading-none text-secondary hover:text-white hover:bg-secondary transition cursor-pointer h-9">
-                  Cadastrar
-                </button>
+                <Register
+                  open={openModal === 'register'}
+                  onOpenChange={(isOpen) =>
+                    setOpenModal(isOpen ? 'register' : null)
+                  }
+                  onLoginClick={() => setOpenModal('login')}
+                />
               </li>
             </>
           )}

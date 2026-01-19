@@ -14,6 +14,12 @@ export function LOGIN() {
   };
 }
 
+export function REGISTER() {
+  return {
+    url: `${BASE_URL}/user/register`,
+  };
+}
+
 export function USER_GET() {
   return {
     url: `${BASE_URL}/user/me`,
