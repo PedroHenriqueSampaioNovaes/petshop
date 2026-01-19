@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     'Adote um pet e ajude a encontrar um lar para eles, onde poderão compartilhar muitos momentos felizes.',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
