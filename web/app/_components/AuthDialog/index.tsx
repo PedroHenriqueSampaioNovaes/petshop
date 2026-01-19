@@ -15,6 +15,7 @@ interface AuthDialogProps {
   submitText: string;
   ActionLinkMessage: ReactNode;
   reverseColumn?: boolean;
+  buttonIsDisabled?: boolean;
   children: ReactNode;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
@@ -29,6 +30,7 @@ export default function AuthDialog({
   submitText,
   children,
   reverseColumn = false,
+  buttonIsDisabled = false,
   open,
   onOpenChange,
 }: AuthDialogProps) {
@@ -50,7 +52,11 @@ export default function AuthDialog({
 
                 {ActionLinkMessage}
 
-                <Button className="max-w-43 mx-auto" type="submit">
+                <Button
+                  className="max-w-43 mx-auto"
+                  type="submit"
+                  disabled={buttonIsDisabled}
+                >
                   {submitText}
                 </Button>
               </Dialog.Description>
