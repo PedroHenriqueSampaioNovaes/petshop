@@ -6,6 +6,8 @@ import './globals.css';
 import Header from '@/src/shared/components/Header';
 import Footer from '@/src/shared/components/Footer';
 
+import { UserContextProvider } from '@/src/context/UserContext';
+
 const inter = Inter({
   variable: '--font-inter-sans',
   subsets: ['latin'],
@@ -33,11 +35,13 @@ export default async function RootLayout({
       <body
         className={`${inter.variable} ${poppins.variable} antialiased font-primary`}
       >
+        <UserContextProvider userData={user}>
         <div className="flex flex-col min-h-screen">
           <Header />
           <main className="flex-1 container">{children}</main>
           <Footer />
         </div>
+        </UserContextProvider>
 
         <Toaster />
       </body>
