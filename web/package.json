@@ -17,6 +17,7 @@
     "react-hook-form": "^7.71.1",
     "react-hot-toast": "^2.6.0",
     "react-icons": "^5.5.0",
+    "use-mask-input": "^3.6.0",
     "zod": "^4.3.5"
   },
   "devDependencies": {
