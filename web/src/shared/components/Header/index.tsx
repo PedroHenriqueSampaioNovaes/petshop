@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import Link from 'next/link';
 
+import logout from '@/app/actions/logout';
+
 import Logo from '../Logo';
 
 import Login from '@/app/_components/Login';
@@ -11,7 +13,7 @@ import Register from '@/app/_components/Register';
 import { useUser } from '@/src/context/UserContext';
 
 export default function Header() {
-  const { user } = useUser();
+  const { user, setUser } = useUser();
 
   const [openModal, setOpenModal] = useState<'login' | 'register' | null>(null);
 
@@ -56,7 +58,15 @@ export default function Header() {
                 </Link>
               </li>
               <li>
-                <button className="px-3 py-2 rounded-md font-semibold leading-none text-secondary hover:text-white hover:bg-secondary transition cursor-pointer h-9">
+                <button
+                  className="px-3 py-2 rounded-md font-semibold leading-none text-secondary hover:text-white hover:bg-secondary transition cursor-pointer h-9"
+                  onClick={async () => {
+                    await logout();
+                    setUser(null);
+
+                    window.location.href = '/';
+                  }}
+                >
                   Sair
                 </button>
               </li>
