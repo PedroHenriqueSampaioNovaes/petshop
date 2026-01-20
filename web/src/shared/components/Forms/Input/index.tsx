@@ -1,12 +1,17 @@
 'use client';
 
-import { HTMLInputTypeAttribute, ReactNode, useState } from 'react';
+import {
+  ComponentProps,
+  HTMLInputTypeAttribute,
+  ReactNode,
+  useState,
+} from 'react';
 import { Field } from '@base-ui/react/field';
 import { FieldValues, UseFormRegisterReturn, FieldPath } from 'react-hook-form';
 
 import { MdOutlineVisibilityOff, MdOutlineVisibility } from 'react-icons/md';
 
-interface InputProps<T extends FieldValues> {
+interface InputProps<T extends FieldValues> extends ComponentProps<'input'> {
   description?: string;
   type?: HTMLInputTypeAttribute;
   placeholder?: string;
