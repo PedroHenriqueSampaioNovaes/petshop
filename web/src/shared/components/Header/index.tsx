@@ -51,7 +51,7 @@ export default function Header() {
               </li>
               <li>
                 <Link
-                  href="/user/perfil"
+                  href="/user/profile"
                   className="px-3 py-2 rounded-md font-semibold text-secondary hover:text-white hover:bg-secondary transition h-9"
                 >
                   Perfil
