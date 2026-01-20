@@ -24,7 +24,7 @@ import AuthDialog from '../AuthDialog';
 
 const registerSchema = z
   .object({
-    name: z.string('Insira um nome'),
+    name: z.string('Insira um nome').min(2, 'Mínimo de 2 caracteres'),
     phone: z
       .string('Insira um telefone para contato')
       .regex(/^\d{2}\s\d{5}\-\d{4}$/, 'Telefone inválido'),
