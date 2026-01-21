@@ -2,12 +2,12 @@ import { Request, Response } from 'express';
 
 import { UpdateUserService } from '../../services/user/UpdateUserService.js';
 
-import { userSchema } from '../../schemas/user.js';
+import { userBaseSchema } from '../../schemas/user.js';
 import { multerImageDataSchema } from '../../schemas/multer.js';
 
 export class UpdateUserController {
   static async handle(req: Request, res: Response) {
-    const userData = userSchema
+    const userData = userBaseSchema
       .partial({ password: true, confirm: true })
       .parse(req.body);
     const image = multerImageDataSchema.optional().parse(req.file);
