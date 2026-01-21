@@ -28,7 +28,7 @@ export default async function userRegister({
   try {
     const { url } = REGISTER();
     const data = await FetchApi.post<IRegisterResponse>(url, {
-      body: { name, phone, email, password, confirm },
+      body: JSON.stringify({ name, phone, email, password, confirm }),
     });
 
     return { data, ok: true, error: '' };
