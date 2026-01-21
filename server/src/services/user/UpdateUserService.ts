@@ -12,7 +12,7 @@ interface UserData {
   name: string;
   email: string;
   phone: string;
-  password: string;
+  password?: string;
   image?: MulterMemoryFile;
 }
 
@@ -43,7 +43,7 @@ export class UpdateUserService {
         } catch (error) {
           throw new ApiError(
             'Erro ao tentar deletar a imagem do usuário na núvem.',
-            400
+            400,
           );
         }
       }
@@ -59,16 +59,18 @@ export class UpdateUserService {
     user.phone = phone;
 
     // create a password hash
-    const salt = await bcrypt.genSalt(12);
-    const passwordHash = await bcrypt.hash(password, salt);
+    if (password) {
+      const salt = await bcrypt.genSalt(12);
+      const passwordHash = await bcrypt.hash(password, salt);
 
-    user.password = passwordHash;
+      user.password = passwordHash;
+    }
 
     try {
       const userUpdated = await User.findOneAndUpdate(
         { _id: user._id },
         { $set: user },
-        { new: true }
+        { new: true },
       );
 
       return { userUpdated, message: 'Usuário atualizado com sucesso!' };

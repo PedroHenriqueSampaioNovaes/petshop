@@ -7,7 +7,9 @@ import { multerImageDataSchema } from '../../schemas/multer.js';
 
 export class UpdateUserController {
   static async handle(req: Request, res: Response) {
-    const userData = userSchema.parse(req.body);
+    const userData = userSchema
+      .partial({ password: true, confirm: true })
+      .parse(req.body);
     const image = multerImageDataSchema.optional().parse(req.file);
 
     const userDataUpdated = await UpdateUserService.execute({
