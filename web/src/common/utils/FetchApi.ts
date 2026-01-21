@@ -57,7 +57,7 @@ export default class FetchApi {
     }
 
     if (!response.ok) {
-      throw new Error(content?.message);
+      throw new Error(content?.message || content?.error);
     }
 
     return content as T;
