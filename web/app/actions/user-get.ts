@@ -15,7 +15,6 @@ export default async function userGet() {
 
     const token = (await cookies()).get('token')?.value;
     const data = await FetchApi.get<IUser>(url, {
-      next: { revalidate: 60 },
       token,
     });
 
