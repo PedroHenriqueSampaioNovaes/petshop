@@ -1,9 +1,5 @@
-interface FetchOptions extends Omit<
-  RequestInit,
-  'method' | 'headers' | 'body'
-> {
+interface FetchOptions extends Omit<RequestInit, 'method'> {
   token?: string;
-  body?: Record<string, unknown>;
 }
 
 export default class FetchApi {
@@ -12,6 +8,7 @@ export default class FetchApi {
       method: 'GET',
       headers: {
         Authorization: options.token ? `Bearer ${options.token}` : '',
+        ...options.headers,
       } as HeadersInit,
       ...options,
     });
@@ -25,8 +22,9 @@ export default class FetchApi {
       headers: {
         'Content-Type': 'application/json',
         Authorization: options.token ? `Bearer ${options.token}` : '',
+        ...options.headers,
       } as HeadersInit,
-      body: options.body ? JSON.stringify(options.body) : null,
+      body: options.body,
     });
 
     return await FetchApi.extractData<T>(response);
@@ -36,10 +34,10 @@ export default class FetchApi {
     const response = await fetch(url, {
       method: 'PATCH',
       headers: {
-        'Content-Type': 'application/json',
         Authorization: options.token ? `Bearer ${options.token}` : '',
+        ...options.headers,
       } as HeadersInit,
-      body: options.body ? JSON.stringify(options.body) : null,
+      body: options.body,
     });
 
     return await FetchApi.extractData<T>(response);
