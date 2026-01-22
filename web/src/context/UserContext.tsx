@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, use, useState } from 'react';
+import { createContext, use, useEffect, useState } from 'react';
 
 import { IUser } from '../common/@types/user';
 
@@ -18,6 +18,10 @@ const UserContext = createContext<IUserContext | null>(null);
 
 export function UserContextProvider({ children, userData }: IUserProvider) {
   const [user, setUser] = useState<IUser | null>(userData);
+
+  useEffect(() => {
+    setUser(userData);
+  }, [userData]);
 
   return <UserContext value={{ user, setUser }}>{children}</UserContext>;
 }
