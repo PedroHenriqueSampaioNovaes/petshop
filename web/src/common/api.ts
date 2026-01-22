@@ -25,3 +25,9 @@ export function USER_GET() {
     url: `${BASE_URL}/user/me`,
   };
 }
+
+export function USER_UPDATE() {
+  return {
+    url: `${BASE_URL}/user`,
+  };
+}
