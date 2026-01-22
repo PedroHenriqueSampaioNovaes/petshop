@@ -18,7 +18,7 @@ import {
 import userRegister from '@/app/actions/user-register';
 import login from '@/app/actions/login';
 
-import Input from '@/src/shared/components/Forms/Input';
+import { InputIcon } from '@/src/shared/components/Forms/Input';
 
 import AuthDialog from '../AuthDialog';
 
@@ -117,7 +117,7 @@ export default function Register({
       reverseColumn
       buttonIsDisabled={isSubmitting}
     >
-      <Input
+      <InputIcon
         placeholder="Nome"
         Icon={
           <MdPersonOutline
@@ -130,7 +130,7 @@ export default function Register({
         error={errors.name?.message}
       />
 
-      <Input
+      <InputIcon
         placeholder="Telefone"
         type="tel"
         Icon={
@@ -147,7 +147,7 @@ export default function Register({
         error={errors.phone?.message}
       />
 
-      <Input
+      <InputIcon
         placeholder="E-mail"
         type="email"
         Icon={
@@ -161,7 +161,7 @@ export default function Register({
         error={errors.email?.message}
       />
 
-      <Input
+      <InputIcon
         placeholder="Senha"
         type="password"
         Icon={
@@ -175,7 +175,7 @@ export default function Register({
         error={errors.password?.message}
       />
 
-      <Input
+      <InputIcon
         placeholder="Confirmar senha"
         type="password"
         Icon={

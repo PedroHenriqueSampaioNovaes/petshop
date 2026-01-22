@@ -11,7 +11,7 @@ import { MdOutlineEmail, MdOutlineVpnKey } from 'react-icons/md';
 
 import login from '@/app/actions/login';
 
-import Input from '@/src/shared/components/Forms/Input';
+import { InputIcon } from '@/src/shared/components/Forms/Input';
 
 import AuthDialog from '../AuthDialog';
 
@@ -78,7 +78,7 @@ export default function Login({
       }
       buttonIsDisabled={isSubmitting}
     >
-      <Input
+      <InputIcon
         placeholder="E-mail"
         type="email"
         Icon={
@@ -92,7 +92,7 @@ export default function Login({
         error={errors.email?.message}
       />
 
-      <Input
+      <InputIcon
         placeholder="Senha"
         type="password"
         Icon={
