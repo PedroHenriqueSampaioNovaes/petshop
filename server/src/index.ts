@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import cors from 'cors';
 import express from 'express';
 import 'express-async-errors';
 import errorHandling from './middleware/errorHandling.js';
@@ -6,6 +7,8 @@ import errorHandling from './middleware/errorHandling.js';
 import routesPromisse from './routes/index.js';
 
 const app = express();
+
+app.use(cors({ origin: process.env.WEBSITE_URL }));
 
 app.get('/ping', (req, res) => {
   res.send('pong');
