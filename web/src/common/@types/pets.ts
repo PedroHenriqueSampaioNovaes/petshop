@@ -3,7 +3,7 @@ export interface IPet {
   name: string;
   age: number;
   weight: number;
-  gender: string;
+  gender: 'macho' | 'fêmea';
   breed: string;
   castrationStatus: boolean;
   location: {
