@@ -8,7 +8,22 @@ const REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE = '/';
 
 export async function proxy(request: NextRequest) {
   const path = request.nextUrl.pathname;
-  const publicRoute = publicRoutes.find((route) => route.path === path);
+  const publicRoute = publicRoutes.find((route) => {
+    const routeParts = route.path.split('/');
+    const requestParts = path.split('/');
+
+    if (routeParts.length !== requestParts.length) {
+      return false;
+    }
+
+    return routeParts.every((part, index) => {
+      if (part.startsWith(':')) {
+        return true;
+      }
+
+      return part === requestParts[index];
+    });
+  });
 
   const token = request.cookies.get('token')?.value;
 
