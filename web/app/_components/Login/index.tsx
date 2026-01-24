@@ -11,8 +11,9 @@ import { MdOutlineEmail, MdOutlineVpnKey } from 'react-icons/md';
 
 import login from '@/app/actions/login';
 
-import { InputIcon } from '@/src/shared/components/Forms/Input';
+import { useAuthModal } from '@/src/context/AuthModalContext';
 
+import { InputIcon } from '@/src/shared/components/Forms/Input';
 import AuthDialog from '../AuthDialog';
 
 const loginSchema = z.object({
@@ -22,17 +23,7 @@ const loginSchema = z.object({
 
 type LoginSchema = z.infer<typeof loginSchema>;
 
-interface LoginProps {
-  open?: boolean;
-  onOpenChange?: (open: boolean) => void;
-  onRegisterClick?: () => void;
-}
-
-export default function Login({
-  open,
-  onOpenChange,
-  onRegisterClick,
-}: LoginProps) {
+export default function Login() {
   const {
     register,
     handleSubmit,
@@ -40,6 +31,8 @@ export default function Login({
   } = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
   });
+
+  const { openModal, setOpenModal } = useAuthModal();
 
   async function onSubmit(data: LoginSchema) {
     const { ok, error } = await login(data);
@@ -61,15 +54,15 @@ export default function Login({
         <Image src="/login-cat.png" width={292} height={312} alt="" />
       }
       submitText="Entrar"
-      open={open}
-      onOpenChange={onOpenChange}
+      open={openModal === 'login'}
+      onOpenChange={(isOpen) => setOpenModal(isOpen ? 'login' : null)}
       ActionLinkMessage={
         <p className="text-sm lg:text-right">
           Não tem conta?{' '}
           <button
             className="text-secondary font-bold cursor-pointer"
             type="button"
-            onClick={onRegisterClick}
+            onClick={() => setOpenModal('register')}
           >
             Clique aqui
           </button>

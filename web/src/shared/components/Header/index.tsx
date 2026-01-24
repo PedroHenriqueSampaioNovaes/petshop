@@ -15,8 +15,6 @@ import { useUser } from '@/src/context/UserContext';
 export default function Header() {
   const { user } = useUser();
 
-  const [openModal, setOpenModal] = useState<'login' | 'register' | null>(null);
-
   return (
     <header className="bg-primary px-6 max-md:px-3 py-4 max-md:py-2 rounded-b-lg flex justify-between items-center max-md:flex-col gap-y-2">
       <Logo />
@@ -69,22 +67,10 @@ export default function Header() {
           ) : (
             <>
               <li>
-                <Login
-                  open={openModal === 'login'}
-                  onOpenChange={(isOpen) =>
-                    setOpenModal(isOpen ? 'login' : null)
-                  }
-                  onRegisterClick={() => setOpenModal('register')}
-                />
+                <Login />
               </li>
               <li>
-                <Register
-                  open={openModal === 'register'}
-                  onOpenChange={(isOpen) =>
-                    setOpenModal(isOpen ? 'register' : null)
-                  }
-                  onLoginClick={() => setOpenModal('login')}
-                />
+                <Register />
               </li>
             </>
           )}

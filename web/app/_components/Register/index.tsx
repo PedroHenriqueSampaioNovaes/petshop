@@ -18,8 +18,9 @@ import {
 import userRegister from '@/app/actions/user-register';
 import login from '@/app/actions/login';
 
-import { InputIcon } from '@/src/shared/components/Forms/Input';
+import { useAuthModal } from '@/src/context/AuthModalContext';
 
+import { InputIcon } from '@/src/shared/components/Forms/Input';
 import AuthDialog from '../AuthDialog';
 
 const registerSchema = z
@@ -39,17 +40,7 @@ const registerSchema = z
 
 type RegisterSchema = z.infer<typeof registerSchema>;
 
-interface RegisterProps {
-  open?: boolean;
-  onOpenChange?: (open: boolean) => void;
-  onLoginClick?: () => void;
-}
-
-export default function Register({
-  open,
-  onOpenChange,
-  onLoginClick,
-}: RegisterProps) {
+export default function Register() {
   const {
     register,
     handleSubmit,
@@ -58,6 +49,8 @@ export default function Register({
     resolver: zodResolver(registerSchema),
   });
   const registerWithMask = useHookFormMask(register);
+
+  const { openModal, setOpenModal } = useAuthModal();
 
   async function onSubmit(data: RegisterSchema) {
     const {
@@ -99,15 +92,15 @@ export default function Register({
         />
       }
       submitText="Cadastrar"
-      open={open}
-      onOpenChange={onOpenChange}
+      open={openModal === 'register'}
+      onOpenChange={(isOpen) => setOpenModal(isOpen ? 'register' : null)}
       ActionLinkMessage={
         <p className="text-sm lg:text-right">
           Já tem conta?{' '}
           <button
             className="text-secondary font-bold cursor-pointer"
             type="button"
-            onClick={onLoginClick}
+            onClick={() => setOpenModal('login')}
           >
             Clique aqui
           </button>

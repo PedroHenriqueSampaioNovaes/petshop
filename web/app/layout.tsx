@@ -9,6 +9,7 @@ import Footer from '@/src/shared/components/Footer';
 import userGet from './actions/user-get';
 
 import { UserContextProvider } from '@/src/context/UserContext';
+import { AuthModalContextProvider } from '@/src/context/AuthModalContext';
 
 const inter = Inter({
   variable: '--font-inter-sans',
@@ -40,11 +41,13 @@ export default async function RootLayout({
         className={`${inter.variable} ${poppins.variable} antialiased font-primary`}
       >
         <UserContextProvider userData={user}>
-          <div className="flex flex-col min-h-screen">
-            <Header />
-            <main className="flex-1 container">{children}</main>
-            <Footer />
-          </div>
+          <AuthModalContextProvider>
+            <div className="flex flex-col min-h-screen">
+              <Header />
+              <main className="flex-1 container">{children}</main>
+              <Footer />
+            </div>
+          </AuthModalContextProvider>
         </UserContextProvider>
 
         <Toaster />
