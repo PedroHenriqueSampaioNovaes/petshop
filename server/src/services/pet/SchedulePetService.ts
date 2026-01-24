@@ -25,7 +25,7 @@ export class SchedulePetService {
 
     // check if user has already scheduled a visit
     if (pet.adopter && pet.adopter._id.equals(user._id)) {
-      return new ApiError('Você já agendou uma visita para esse Pet!', 422);
+      throw new ApiError('Você já agendou uma visita para esse Pet!', 422);
     }
 
     // add user to pet
