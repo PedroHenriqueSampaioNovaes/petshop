@@ -6,7 +6,9 @@ export const createPetSchema = z.object({
   name: z.string().min(2),
   age: z.coerce.number().min(0),
   weight: z.coerce.number(),
-  description: z.string(),
+  description: z
+    .string()
+    .max(300, 'A descrição deve ter no máximo 300 caracteres'),
   breed: z.string(),
   gender: z.enum(['macho', 'fêmea']),
   castrationStatus: z
@@ -33,7 +35,8 @@ export const createPetSchema = z.object({
 
 export const petMulterImagesSchema = z
   .array(multerImageDataSchema)
-  .min(1, 'É necessário enviar pelo menos 1 imagem do pet');
+  .min(4, 'É necessário enviar 4 imagens do pet')
+  .max(4, 'É necessário enviar 4 imagens do pet');
 
 export const listPetSchema = z.object({
   petsPerPage: z.coerce
@@ -43,8 +46,8 @@ export const listPetSchema = z.object({
     (val) => (val === 'null' ? null : val),
     z.coerce
       .date(
-        'A data tem que estar no formato de ISO em string. Converta a ISO para string com .toISOString()'
+        'A data tem que estar no formato de ISO em string. Converta a ISO para string com .toISOString()',
       )
-      .nullable()
+      .nullable(),
   ),
 });
