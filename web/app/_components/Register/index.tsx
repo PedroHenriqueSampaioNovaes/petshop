@@ -92,8 +92,8 @@ export default function Register({
       ImageAside={
         <Image
           src="/register-dog.png"
-          width={171}
-          height={381}
+          width={172}
+          height={225}
           alt=""
           className="mt-12"
         />
