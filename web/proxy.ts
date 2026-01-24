@@ -2,7 +2,10 @@ import { NextResponse, NextRequest } from 'next/server';
 
 import { verifyToken } from './src/common/utils/verifyToken';
 
-const publicRoutes = [{ path: '/', whenAuthenticated: 'next' }] as const;
+const publicRoutes = [
+  { path: '/', whenAuthenticated: 'next' },
+  { path: '/pet/:id', whenAuthenticated: 'next' },
+] as const;
 
 const REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE = '/';
 

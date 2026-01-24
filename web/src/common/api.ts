@@ -8,6 +8,18 @@ export function GET_PETS({ petsPerPage = 8, nextCursor = null }: IApiGetPets) {
   };
 }
 
+export function GET_PET({ id }: { id: string }) {
+  return {
+    url: `${BASE_URL}/pets/${id}`,
+  };
+}
+
+export function PET_SCHEDULE({ id }: { id: string }) {
+  return {
+    url: `${BASE_URL}/pets/schedule/${id}`,
+  };
+}
+
 export function LOGIN() {
   return {
     url: `${BASE_URL}/user/session`,
