@@ -16,19 +16,20 @@ interface InputIconProps<
 > extends ComponentProps<'input'> {
   description?: string;
   type?: HTMLInputTypeAttribute;
-  placeholder?: string;
   error?: string;
   Icon: ReactNode;
   register: UseFormRegisterReturn<FieldPath<T>>;
+  canShowPassword?: boolean;
 }
 
 export default function InputIcon<T extends FieldValues>({
   description,
   type = 'text',
-  placeholder,
-  error,
   Icon,
   register,
+  error,
+  canShowPassword = false,
+  ...props
 }: InputIconProps<T>) {
   const [visible, setVisible] = useState(false);
 
@@ -38,11 +39,11 @@ export default function InputIcon<T extends FieldValues>({
         {Icon}
         <Field.Control
           type={visible ? 'text' : type}
-          placeholder={placeholder}
           className="w-full border border-back-400 pl-10 h-10 rounded-lg font-secondary placeholder:text-back-600 text-sm"
           {...register}
+          {...props}
         />
-        {type === 'password' &&
+        {canShowPassword &&
           (visible ? (
             <MdOutlineVisibility
               className="absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer"
