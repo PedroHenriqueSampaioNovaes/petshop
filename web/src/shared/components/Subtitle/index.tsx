@@ -5,5 +5,5 @@ interface SubtitleProps {
 }
 
 export default function Subtitle({ children }: SubtitleProps) {
-  return <p className="font-secondary">{children}</p>;
+  return <p className="font-secondary max-md:text-center">{children}</p>;
 }
