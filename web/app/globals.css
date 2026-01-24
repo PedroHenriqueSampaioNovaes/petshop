@@ -8,6 +8,7 @@
 @theme {
   --color-primary: #ffd400;
   --color-secondary: #16479d;
+  --color-back-100: #f9f9f9;
   --color-back-200: #eee;
   --color-back-300: #dfdfdf;
   --color-back-400: #cbcbcb;
@@ -16,7 +17,20 @@
   --color-valid-500: #25b456;
   --color-valid-600: #1c8a42;
 
+  --color-contrast-primary: #0a453a;
+
   --breakpoint-xs: 30rem;
+
+  --animate-fadeInImage: fadeInImage 0.35s ease-in-out;
+
+  @keyframes fadeInImage {
+    from {
+      opacity: 0.6;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 }
 
 @utility container {
