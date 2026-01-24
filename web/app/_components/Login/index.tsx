@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 
 import { useForm } from 'react-hook-form';
 import z from 'zod';
@@ -32,6 +33,8 @@ export default function Login() {
     resolver: zodResolver(loginSchema),
   });
 
+  const pathname = usePathname();
+
   const { openModal, setOpenModal } = useAuthModal();
 
   async function onSubmit(data: LoginSchema) {
@@ -42,7 +45,7 @@ export default function Login() {
       return;
     }
 
-    window.location.href = '/';
+    window.location.href = pathname;
   }
 
   return (
