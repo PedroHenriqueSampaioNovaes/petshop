@@ -25,7 +25,7 @@ export default async function userUpdate(formData: FormData) {
       token,
     });
 
-    const tag = await cacheTagByUserId('user-data-get');
+    const tag = await cacheTagByUserId('update-profile');
 
     if (tag) updateTag(tag);
 

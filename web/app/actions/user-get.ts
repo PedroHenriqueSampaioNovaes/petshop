@@ -15,7 +15,7 @@ export default async function userGet() {
   try {
     const { url } = USER_GET();
 
-    const tag = await cacheTagByUserId('user-data-get');
+    const tag = await cacheTagByUserId('update-profile');
 
     const token = (await cookies()).get('token')?.value;
     const data = await FetchApi.get<IUser>(url, {
