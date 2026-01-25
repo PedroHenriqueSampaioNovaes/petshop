@@ -21,7 +21,7 @@ import { profileSchema } from '@/src/schema/profile';
 type ProfileSchema = z.infer<typeof profileSchema>;
 
 export default function Profile() {
-  const { user, setUser } = useUser();
+  const { user } = useUser();
   const [preview, setPreview] = useState<string | null>(
     user?.image?.url || null,
   );
@@ -56,7 +56,7 @@ export default function Profile() {
       }
     }
 
-    const { data: userData, ok, error } = await userUpdate(formData);
+    const { ok, error } = await userUpdate(formData);
 
     if (!ok) {
       toast.error(error);
@@ -64,7 +64,6 @@ export default function Profile() {
     }
 
     toast.success('Perfil atualizado com sucesso!');
-    setUser(userData.userUpdated);
   }
 
   return (
