@@ -23,7 +23,7 @@ type ProfileSchema = z.infer<typeof profileSchema>;
 export default function Profile() {
   const { user, setUser } = useUser();
   const [preview, setPreview] = useState<string | null>(
-    user?.image.url || null,
+    user?.image?.url || null,
   );
 
   const {
