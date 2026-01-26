@@ -1,14 +1,13 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
 
 import logout from '@/app/actions/logout';
 
 import Logo from '../Logo';
 
-import Login from '@/app/_components/Login';
-import Register from '@/app/_components/Register';
+import Login from '@/app/_components/Auth/Login';
+import Register from '@/app/_components/Auth/Register';
 
 import { useUser } from '@/src/context/UserContext';
 
