@@ -16,7 +16,7 @@ export default function PetGallery({ pet }: { pet: IPet }) {
         alt={pet.name}
         width={1200}
         height={1200}
-        className="rounded-2xl object-cover h-60 sm:h-102 animate-fadeInImage"
+        className="rounded-2xl object-contain h-60 sm:h-102 animate-fadeInImage"
         loading="eager"
       />
       <div className="flex sm:max-lg:flex-col justify-between max-sm:gap-4 lg:gap-6.5">
