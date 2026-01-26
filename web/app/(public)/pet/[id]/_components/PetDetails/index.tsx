@@ -73,7 +73,7 @@ export default function PetDetails({ pet }: { pet: IPet }) {
         </li>
         <li className="flex max-lg:flex-col items-center lg:gap-4.5">
           <span className="flex flex-col items-center max-lg:mb-2">
-            {pet.gender === 'fêmea' ? (
+            {pet.gender === 'female' ? (
               <MdOutlineFemale
                 size={24}
                 color="var(--color-contrast-primary)"
