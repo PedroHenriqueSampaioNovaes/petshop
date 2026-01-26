@@ -7,7 +7,7 @@ export interface IPetMulterDataRequest {
   images: MulterMemoryFile[];
   description: string;
   breed: string;
-  gender: string;
+  gender: 'male' | 'female';
   castrationStatus: boolean;
   location: {
     state: string;

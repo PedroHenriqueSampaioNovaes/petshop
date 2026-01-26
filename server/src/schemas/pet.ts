@@ -10,7 +10,7 @@ export const createPetSchema = z.object({
     .string()
     .max(300, 'A descrição deve ter no máximo 300 caracteres'),
   breed: z.string(),
-  gender: z.enum(['macho', 'fêmea']),
+  gender: z.enum(['male', 'female']),
   castrationStatus: z
     .enum(['true', 'false'], {
       message: 'castrationStatus deve ser "true" ou "false"',
