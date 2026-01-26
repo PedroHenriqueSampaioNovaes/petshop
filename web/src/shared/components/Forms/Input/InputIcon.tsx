@@ -1,21 +1,18 @@
 'use client';
 
-import {
-  ComponentProps,
-  HTMLInputTypeAttribute,
-  ReactNode,
-  useState,
-} from 'react';
+import { ComponentProps, ReactNode, useState } from 'react';
 import { Field } from '@base-ui/react/field';
 import { FieldValues, UseFormRegisterReturn, FieldPath } from 'react-hook-form';
 
 import { MdOutlineVisibilityOff, MdOutlineVisibility } from 'react-icons/md';
 
+import FieldError from '../Fields/FieldError';
+import FieldLabel from '../Fields/FieldLabel';
+import FieldControl from '../Fields/FieldControl';
+
 interface InputIconProps<
   T extends FieldValues,
 > extends ComponentProps<'input'> {
-  description?: string;
-  type?: HTMLInputTypeAttribute;
   error?: string;
   Icon: ReactNode;
   register: UseFormRegisterReturn<FieldPath<T>>;
@@ -23,8 +20,6 @@ interface InputIconProps<
 }
 
 export default function InputIcon<T extends FieldValues>({
-  description,
-  type = 'text',
   Icon,
   register,
   error,
@@ -35,13 +30,13 @@ export default function InputIcon<T extends FieldValues>({
 
   return (
     <Field.Root>
-      <Field.Label className="flex items-center relative">
+      <FieldLabel className="flex items-center relative">
         {Icon}
-        <Field.Control
-          type={visible ? 'text' : type}
-          className="w-full border border-back-400 pl-10 h-10 rounded-lg font-secondary placeholder:text-back-600 text-sm"
-          {...register}
+        <FieldControl
+          className="pl-10"
+          register={register}
           {...props}
+          type={visible ? 'text' : props.type}
         />
         {canShowPassword &&
           (visible ? (
@@ -59,17 +54,9 @@ export default function InputIcon<T extends FieldValues>({
               color="var(--color-back-700)"
             />
           ))}
-      </Field.Label>
+      </FieldLabel>
 
-      <Field.Error className="text-sm text-red-800 mt-0.5" match={true}>
-        {error}
-      </Field.Error>
-
-      {description && (
-        <Field.Description className="text-sm text-gray-600">
-          {description}
-        </Field.Description>
-      )}
+      <FieldError error={error} />
     </Field.Root>
   );
 }
