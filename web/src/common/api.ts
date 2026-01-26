@@ -14,6 +14,18 @@ export function GET_PET({ id }: { id: string }) {
   };
 }
 
+export function GET_MYPETS() {
+  return {
+    url: `${BASE_URL}/pets/myPets`,
+  };
+}
+
+export function DELETE_PET({ id }: { id: string }) {
+  return {
+    url: `${BASE_URL}/pets/${id}`,
+  };
+}
+
 export function PET_SCHEDULE({ id }: { id: string }) {
   return {
     url: `${BASE_URL}/pets/schedule/${id}`,
