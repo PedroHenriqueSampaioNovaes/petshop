@@ -53,7 +53,7 @@ export default function Card({
           <li className="lg:mb-3">
             <span className="font-medium">Gênero:</span>{' '}
             <span className="text-xs p-1 rounded-sm text-black bg-[#ffda6b] capitalize">
-              {gender}
+              {gender === 'male' ? 'macho' : 'fêmea'}
             </span>
           </li>
           <li>
