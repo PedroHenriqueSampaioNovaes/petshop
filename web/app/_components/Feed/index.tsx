@@ -2,7 +2,7 @@
 
 import Subtitle from '@/src/shared/components/Subtitle';
 import Title from '@/src/shared/components/Title';
-import Card from '../Card';
+import Card from './Card';
 
 import useGetPetsOnInfiniteScroll from '@/src/hooks/useGetPetsOnInfiniteScroll';
 
