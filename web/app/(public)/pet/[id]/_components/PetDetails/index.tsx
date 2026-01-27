@@ -4,6 +4,7 @@ import PawIcon from '@/src/shared/components/Icons/PawIcon';
 
 import {
   MdOutlineFemale,
+  MdOutlineLocationOn,
   MdOutlineMale,
   MdOutlineScale,
   MdOutlineVaccines,
@@ -107,6 +108,18 @@ export default function PetDetails({ pet }: { pet: IPet }) {
             </span>
           </span>{' '}
           {pet.weight}kg
+        </li>
+        <li className="flex max-lg:flex-col items-center lg:gap-4.5">
+          <span className="flex flex-col items-center max-lg:mb-2">
+            <MdOutlineLocationOn
+              color="var(--color-contrast-primary)"
+              size={24}
+            />
+            <span className="lg:hidden text-sm text-back-700 font-medium mt-0.5">
+              Localização
+            </span>
+          </span>{' '}
+          {pet.location.state}, {pet.location.municipality}
         </li>
       </ul>
     </div>
