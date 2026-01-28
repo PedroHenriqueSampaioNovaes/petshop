@@ -26,6 +26,12 @@ export function DELETE_PET({ id }: { id: string }) {
   };
 }
 
+export function PET_CREATE() {
+  return {
+    url: `${BASE_URL}/pets/create`,
+  };
+}
+
 export function PET_SCHEDULE({ id }: { id: string }) {
   return {
     url: `${BASE_URL}/pets/schedule/${id}`,
