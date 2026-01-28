@@ -86,7 +86,7 @@ export default function PetDetails({ pet }: { pet: IPet }) {
               Gênero
             </span>
           </span>{' '}
-          {pet.gender}
+          {pet.gender === 'male' ? 'Macho' : 'Fêmea'}
         </li>
         <li className="flex max-lg:flex-col items-center lg:gap-4.5">
           <span className="flex flex-col items-center max-lg:mb-2">
