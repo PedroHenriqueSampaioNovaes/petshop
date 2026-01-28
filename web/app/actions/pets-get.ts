@@ -2,7 +2,6 @@
 
 import apiError from '@/src/common/utils/apiError';
 import FetchApi from '@/src/common/utils/FetchApi';
-import { cacheTagByUserId } from '@/src/common/utils/cacheTagByUserId';
 
 import { IPet } from '@/src/common/@types/pets';
 
@@ -24,12 +23,10 @@ export default async function petsGet({
   nextCursor = null,
 }: IPetsGet) {
   try {
-    const tag = await cacheTagByUserId('get-pets');
-
     const { url } = GET_PETS({ petsPerPage, nextCursor });
     const data = await FetchApi.get<IPetsGetResponse>(url, {
       cache: 'force-cache',
-      next: { revalidate: 60, tags: [tag] },
+      next: { revalidate: 60, tags: ['get-pets'] },
     });
 
     return { data, ok: true, error: '' };
