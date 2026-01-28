@@ -12,19 +12,25 @@ interface InputLabelProps<
   T extends FieldValues,
 > extends ComponentProps<'input'> {
   label: string;
+  centralizedLabel?: boolean;
   error?: string;
   register: UseFormRegisterReturn<FieldPath<T>>;
 }
 
 export default function InputLabel<T extends FieldValues>({
   label,
+  centralizedLabel,
   error,
   register,
   ...props
 }: InputLabelProps<T>) {
   return (
     <Field.Root>
-      <FieldLabel className="block mb-1">{label}</FieldLabel>
+      <FieldLabel
+        className={`block mb-1 ${centralizedLabel ? 'text-center' : ''}`}
+      >
+        {label}
+      </FieldLabel>
       <FieldControl register={register} {...props} />
 
       <FieldError error={error} />
