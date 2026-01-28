@@ -3,9 +3,13 @@ import { NextResponse, NextRequest } from 'next/server';
 import { verifyToken } from './src/common/utils/verifyToken';
 
 const publicRoutes = [
-  { path: '/', whenAuthenticated: 'next' },
-  { path: '/pet/:id', whenAuthenticated: 'next' },
-] as const;
+  { path: '/', conflictingPrivateRoutes: null, whenAuthenticated: 'next' },
+  {
+    path: '/pet/:id',
+    conflictingPrivateRoutes: ['/pet/add', '/pet/mypets'],
+    whenAuthenticated: 'next',
+  },
+];
 
 const REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE = '/';
 
@@ -16,6 +20,10 @@ export async function proxy(request: NextRequest) {
     const requestParts = path.split('/');
 
     if (routeParts.length !== requestParts.length) {
+      return false;
+    }
+
+    if (route.conflictingPrivateRoutes?.includes(path)) {
       return false;
     }
 
@@ -64,6 +72,6 @@ export async function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|public).*)',
   ],
 };
