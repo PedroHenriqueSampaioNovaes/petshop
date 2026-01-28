@@ -8,6 +8,7 @@ export const createPetSchema = z.object({
   weight: z.coerce.number(),
   description: z
     .string()
+    .min(40, 'A descrição deve ter no mínimo 40 caracteres')
     .max(300, 'A descrição deve ter no máximo 300 caracteres'),
   breed: z.string(),
   gender: z.enum(['male', 'female']),
