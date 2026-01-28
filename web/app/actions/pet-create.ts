@@ -22,10 +22,9 @@ export default async function petCreate(formData: FormData) {
     });
 
     const tag = await cacheTagByUserId('get-mypet');
-    const tag2 = await cacheTagByUserId('get-pets');
 
     updateTag(tag);
-    updateTag(tag2);
+    updateTag('get-pets');
 
     return { data, ok: true, error: '' };
   } catch (error) {

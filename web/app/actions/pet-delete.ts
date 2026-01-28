@@ -18,13 +18,12 @@ export default async function petDelete({ id }: IPetDelete) {
     const token = (await cookies()).get('token')?.value;
 
     const tag = await cacheTagByUserId('get-mypet');
-    const tag2 = await cacheTagByUserId('get-pets');
 
     const { url } = DELETE_PET({ id });
     const data = await FetchApi.delete(url, { token });
 
     updateTag(tag);
-    updateTag(tag2);
+    updateTag('get-pets');
 
     return { data, ok: true, error: '' };
   } catch (error) {
