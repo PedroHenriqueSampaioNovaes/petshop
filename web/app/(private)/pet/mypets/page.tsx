@@ -1,5 +1,11 @@
 import { Suspense } from 'react';
 import Link from 'next/link';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Adopt a Pet - Meus Pets',
+  description: 'Cadastre, exclua ou edite as informações sobre seu pet.',
+};
 
 import Title from '@/src/shared/components/Title';
 import MyPetsWrapper from './_components/MyPetsWrapper';
