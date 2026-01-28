@@ -24,6 +24,9 @@ export default async function login({ email, password }: ILogin) {
     const { url } = LOGIN();
     const data = await FetchApi.post<ILoginResponse>(url, {
       body: JSON.stringify({ email, password }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     });
 
     (await cookies()).set('token', data.token, {

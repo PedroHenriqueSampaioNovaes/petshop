@@ -20,10 +20,9 @@ export default class FetchApi {
     const response = await fetch(url, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
         Authorization: options.token ? `Bearer ${options.token}` : '',
         ...options.headers,
-      } as HeadersInit,
+      },
       body: options.body,
     });
 
