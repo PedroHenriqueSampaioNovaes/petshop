@@ -24,7 +24,8 @@ export class UpdatePetService {
     castrationStatus,
     description,
     images,
-    location,
+    municipality,
+    state,
   }: UpdatePetData) {
     const pet = await Pet.findById(petId);
     if (!pet) throw new ApiError('Pet não encontrado.', 404);
@@ -32,7 +33,7 @@ export class UpdatePetService {
     if (pet.user._id.toString() !== userId) {
       throw new ApiError(
         'Você não tem permissão para atualizar as informações sobre este pet.',
-        403
+        403,
       );
     }
 
@@ -44,7 +45,7 @@ export class UpdatePetService {
     } catch (error) {
       throw new ApiError(
         'Erro ao tentar deletar as imagens do pet na núvem.',
-        400
+        400,
       );
     }
 
@@ -95,7 +96,10 @@ export class UpdatePetService {
       description,
       castrationStatus,
       images: imagesData,
-      location,
+      location: {
+        municipality,
+        state,
+      },
     };
 
     try {
