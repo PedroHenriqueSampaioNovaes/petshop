@@ -9,8 +9,6 @@ export interface IPetMulterDataRequest {
   breed: string;
   gender: 'male' | 'female';
   castrationStatus: boolean;
-  location: {
-    state: string;
-    municipality: string;
-  };
+  state: string;
+  municipality: string;
 }

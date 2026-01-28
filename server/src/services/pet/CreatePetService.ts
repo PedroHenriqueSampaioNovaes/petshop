@@ -21,7 +21,8 @@ export class CreatePetService {
     breed,
     gender,
     castrationStatus,
-    location,
+    state,
+    municipality,
   }: CreatePetData) {
     const user = await User.findById(userId);
     if (!user) throw new ApiError('Usuário não encontrado!', 401);
@@ -47,7 +48,10 @@ export class CreatePetService {
       breed,
       gender,
       castrationStatus,
-      location,
+      location: {
+        state,
+        municipality,
+      },
       description,
       available: true,
       images: imagesData,

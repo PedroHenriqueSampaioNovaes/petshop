@@ -17,21 +17,8 @@ export const createPetSchema = z.object({
       message: 'castrationStatus deve ser "true" ou "false"',
     })
     .transform((val) => val === 'true'),
-  location: z.string().transform((str, ctx) => {
-    try {
-      const parsed = JSON.parse(str);
-      return z
-        .object({ state: z.string(), municipality: z.string() })
-        .parse(parsed);
-    } catch (error) {
-      ctx.addIssue({
-        code: 'custom',
-        message:
-          'Location deve ser uma string JSON válida com state e municipality',
-      });
-      return z.NEVER;
-    }
-  }),
+  state: z.string('O estado é obrigatório'),
+  municipality: z.string('O município é obrigatório'),
 });
 
 export const petMulterImagesSchema = z
