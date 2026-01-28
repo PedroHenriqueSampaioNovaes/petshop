@@ -14,7 +14,7 @@ export default async function myPetsGet() {
   try {
     const token = (await cookies()).get('token')?.value;
 
-    const tag = await cacheTagByUserId('delete-pet');
+    const tag = await cacheTagByUserId('get-mypet');
 
     const { url } = GET_MYPETS();
     const data = await FetchApi.get<IPet[]>(url, {

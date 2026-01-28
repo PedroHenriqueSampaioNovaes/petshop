@@ -17,7 +17,7 @@ export default async function petDelete({ id }: IPetDelete) {
   try {
     const token = (await cookies()).get('token')?.value;
 
-    const tag = await cacheTagByUserId('delete-pet');
+    const tag = await cacheTagByUserId('get-mypet');
 
     const { url } = DELETE_PET({ id });
     const data = await FetchApi.delete(url, { token });
