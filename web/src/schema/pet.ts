@@ -27,4 +27,15 @@ export const petFormSchema = z.object({
   description: z.string().min(40, 'Descrição muito curta'),
 });
 
+export const petFormSchemaPartial = petFormSchema
+  .omit({ images: true })
+  .partial()
+  .extend({
+    images: z.refine<FileList>(
+      (list) => list.length === 0 || list.length === 4,
+      'Selecione quatro imagens',
+    ),
+  });
+
 export type PetFormSchema = z.infer<typeof petFormSchema>;
+export type PetFormSchemaPartial = z.infer<typeof petFormSchemaPartial>;
