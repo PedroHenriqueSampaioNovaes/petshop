@@ -32,6 +32,12 @@ export function PET_CREATE() {
   };
 }
 
+export function PET_UPDATE({ id }: { id: string }) {
+  return {
+    url: `${BASE_URL}/pets/${id}`,
+  };
+}
+
 export function PET_SCHEDULE({ id }: { id: string }) {
   return {
     url: `${BASE_URL}/pets/schedule/${id}`,
