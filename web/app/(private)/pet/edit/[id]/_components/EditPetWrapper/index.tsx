@@ -19,7 +19,7 @@ interface IEditPetWrapperProps {
   params: Promise<{ id: string }>;
 }
 
-export default async function EditPetWrapper({ params }: IEditPetWrapperProps) {
+export async function fetchStates() {
   const response = await fetch('https://brasilapi.com.br/api/ibge/uf/v1', {
     cache: 'force-cache',
     next: {
@@ -28,9 +28,17 @@ export default async function EditPetWrapper({ params }: IEditPetWrapperProps) {
   });
   const states: IState[] = await response.json();
 
+  return states;
+}
+
+export default async function EditPetWrapper({ params }: IEditPetWrapperProps) {
   const { id } = await params;
 
-  const { data: pet, ok } = await petGet({ id });
+  const [states, petResponse] = await Promise.all([
+    fetchStates(),
+    petGet({ id }),
+  ]);
+  const { data: pet, ok } = petResponse;
 
   if (!ok) {
     return <p>Pet não encontrado.</p>;
