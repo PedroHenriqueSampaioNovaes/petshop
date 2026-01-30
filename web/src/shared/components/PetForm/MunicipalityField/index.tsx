@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import ComboboxField, { Option } from '../../Forms/ComboboxField';
-import { PetFormSchema } from '..';
+
+import { PetFormSchema } from '@/src/schema/pet';
 
 export default function MunicipalityField() {
   const {
