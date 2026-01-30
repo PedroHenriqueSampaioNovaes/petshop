@@ -3,22 +3,22 @@ import z from 'zod';
 import { multerImageDataSchema } from './multer.js';
 
 export const createPetSchema = z.object({
-  name: z.string().min(2),
-  age: z.coerce.number().min(0),
-  weight: z.coerce.number(),
+  name: z.string().min(2, 'Nome deve ter no mínimo 2 caracteres'),
+  age: z.coerce.number().min(1, 'Idade deve ser maior ou igual a 1'),
+  weight: z.coerce.number().min(1, 'Peso deve ser maior ou igual a 1'),
   description: z
     .string()
     .min(40, 'A descrição deve ter no mínimo 40 caracteres')
     .max(300, 'A descrição deve ter no máximo 300 caracteres'),
-  breed: z.string(),
-  gender: z.enum(['male', 'female']),
+  breed: z.string().min(1, 'Raça do pet é obrigatória'),
+  gender: z.enum(['male', 'female'], 'Gênero do pet é obrigatório'),
   castrationStatus: z
-    .enum(['true', 'false'], {
-      message: 'castrationStatus deve ser "true" ou "false"',
-    })
+    .enum(['true', 'false'], 'Status de castração do pet é obrigatório')
     .transform((val) => val === 'true'),
-  state: z.string('O estado é obrigatório'),
-  municipality: z.string('O município é obrigatório'),
+  state: z.string('O estado é obrigatório').min(1, 'Selecione um estado'),
+  municipality: z
+    .string('O município é obrigatório')
+    .min(1, 'Selecione um município'),
 });
 
 export const petMulterImagesSchema = z
