@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useForm, Resolver, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import toast from 'react-hot-toast';
@@ -33,6 +34,8 @@ export default function AddPet({ states }: AddPetProps) {
     },
   });
 
+  const router = useRouter();
+
   async function onSubmit(data: PetFormSchema) {
     const formData = new FormData();
 
@@ -54,6 +57,7 @@ export default function AddPet({ states }: AddPetProps) {
     }
 
     toast.success('Pet cadastrado com sucesso!');
+    router.push('/pet/mypets');
   }
 
   return (
