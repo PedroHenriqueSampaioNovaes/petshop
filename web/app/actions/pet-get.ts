@@ -14,7 +14,13 @@ interface IPetGet {
 export default async function petGet({ id }: IPetGet) {
   try {
     const { url } = GET_PET({ id });
-    const data = await FetchApi.get<IPet>(url);
+    const data = await FetchApi.get<IPet>(url, {
+      cache: 'force-cache',
+      next: {
+        revalidate: 60 * 60 * 24 * 7,
+        tags: ['get-pet'],
+      },
+    });
 
     return { data, ok: true, error: '' };
   } catch (error) {
