@@ -1,6 +1,6 @@
 import { ComponentProps } from 'react';
 import { UseFormRegisterReturn, FieldPath, FieldValues } from 'react-hook-form';
-import { Field } from '@base-ui/react';
+import { Field } from '@base-ui/react/field';
 
 interface FieldControlProps<
   T extends FieldValues,

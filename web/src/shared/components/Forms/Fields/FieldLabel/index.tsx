@@ -1,4 +1,4 @@
-import { Field } from '@base-ui/react';
+import { Field } from '@base-ui/react/field';
 
 interface FieldLabelProps {
   children: React.ReactNode;
