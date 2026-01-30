@@ -62,6 +62,12 @@ export function USER_GET() {
   };
 }
 
+export function USER_ADOPTIONS() {
+  return {
+    url: `${BASE_URL}/pets/myadoptions`,
+  };
+}
+
 export function USER_UPDATE() {
   return {
     url: `${BASE_URL}/user`,

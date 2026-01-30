@@ -6,7 +6,7 @@ const publicRoutes = [
   { path: '/', conflictingPrivateRoutes: null, whenAuthenticated: 'next' },
   {
     path: '/pet/:id',
-    conflictingPrivateRoutes: ['/pet/add', '/pet/mypets'],
+    conflictingPrivateRoutes: ['/pet/add', '/pet/mypets', '/pet/myadoptions'],
     whenAuthenticated: 'next',
   },
 ];
