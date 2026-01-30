@@ -29,7 +29,6 @@ export const petFormSchema = z.object({
 
 export const petFormSchemaPartial = petFormSchema
   .omit({ images: true })
-  .partial()
   .extend({
     images: z.refine<FileList>(
       (list) => list.length === 0 || list.length === 4,
