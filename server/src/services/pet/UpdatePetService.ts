@@ -1,6 +1,6 @@
 import { v2 as cloudinary } from 'cloudinary';
 
-import Pet, { type IPet } from '../../models/Pet.js';
+import Pet from '../../models/Pet.js';
 
 import { IPetMulterDataRequest } from '../../@types/pet.js';
 
@@ -37,73 +37,46 @@ export class UpdatePetService {
       );
     }
 
-    // remove images of the cloudinary
-    try {
-      for (const image of pet.images) {
-        await cloudinary.uploader.destroy(image.public_id as string);
+    if (images.length) {
+      // remove images of the cloudinary
+      try {
+        for (const image of pet.images) {
+          await cloudinary.uploader.destroy(image.public_id as string);
+        }
+      } catch (error) {
+        throw new ApiError(
+          'Erro ao tentar deletar as imagens do pet na núvem.',
+          400,
+        );
       }
-    } catch (error) {
-      throw new ApiError(
-        'Erro ao tentar deletar as imagens do pet na núvem.',
-        400,
-      );
+
+      // upload pet images on the cloudinary
+      const uploads = images.map((image) => {
+        return uploadImageToCloudinary(image, 'pets');
+      });
+
+      const uploadedImages = await Promise.all(uploads);
+      pet.images = [];
+      uploadedImages.forEach((result) => {
+        pet.images.push({
+          url: result.secure_url,
+          public_id: result.public_id,
+        });
+      });
     }
 
-    // remove pet images of the db
-    try {
-      await Pet.findByIdAndUpdate(pet._id, {
-        $set: {
-          images: [],
-        },
-      });
-    } catch (err) {
-      throw new ApiError('Erro ao remover as imagens do pet.', 500);
-    }
-
-    // upload pet images on the cloudinary
-    const uploads = images.map((image) => {
-      return uploadImageToCloudinary(image, 'pets');
-    });
-
-    const imagesData: { url: string; public_id: string }[] = [];
-    const uploadedImages = await Promise.all(uploads);
-    uploadedImages.forEach((result) => {
-      imagesData.push({
-        url: result.secure_url,
-        public_id: result.public_id,
-      });
-    });
-
-    // add pet images in the db
-    try {
-      await Pet.findByIdAndUpdate(pet._id, {
-        $push: {
-          images: {
-            $each: imagesData,
-          },
-        },
-      });
-    } catch (err) {
-      throw new ApiError('Erro ao adicionar as imagens do pet.', 500);
-    }
-
-    const updatedData: Partial<IPet> = {
-      name,
-      age,
-      weight,
-      gender,
-      breed,
-      description,
-      castrationStatus,
-      images: imagesData,
-      location: {
-        municipality,
-        state,
-      },
-    };
+    pet.name = name;
+    pet.age = age;
+    pet.weight = weight;
+    pet.gender = gender;
+    pet.breed = breed;
+    pet.description = description;
+    pet.castrationStatus = castrationStatus;
+    pet.location.municipality = municipality;
+    pet.location.state = state;
 
     try {
-      await Pet.findByIdAndUpdate(pet._id, updatedData);
+      await Pet.findByIdAndUpdate(pet._id, { $set: pet });
       return { message: 'Pet atualizado com sucesso.' };
     } catch (err) {
       throw new ApiError('Erro ao atualizar o pet.', 500);
