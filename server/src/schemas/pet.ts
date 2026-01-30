@@ -26,6 +26,13 @@ export const petMulterImagesSchema = z
   .min(4, 'É necessário enviar 4 imagens do pet')
   .max(4, 'É necessário enviar 4 imagens do pet');
 
+export const petMulterImagesSchemaPartial = z
+  .array(multerImageDataSchema)
+  .refine(
+    (images) => images.length === 0 || images.length === 4,
+    'É necessário enviar 4 imagens do pet',
+  );
+
 export const listPetSchema = z.object({
   petsPerPage: z.coerce
     .number('É obrigatório enviar a quantidade de pets por página')
