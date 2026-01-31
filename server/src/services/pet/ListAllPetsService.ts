@@ -1,4 +1,6 @@
-import Pet from '../../models/Pet.js';
+import { QueryFilter } from 'mongoose';
+
+import Pet, { IPet } from '../../models/Pet.js';
 
 interface QueryData {
   petsPerPage: number;
@@ -8,7 +10,9 @@ interface QueryData {
 export class ListAllPetsService {
   static async execute({ petsPerPage, nextCursor }: QueryData) {
     try {
-      const query = nextCursor ? { createdAt: { $lt: nextCursor } } : {};
+      const query: QueryFilter<IPet> = { available: true };
+
+      if (nextCursor) query.createdAt = { $lt: nextCursor };
 
       const pets = await Pet.find(query)
         .sort('-createdAt')
@@ -20,7 +24,9 @@ export class ListAllPetsService {
         pets.pop();
       }
 
-      const newNextCursor = hasNextPage ? pets[pets.length - 1].createdAt : null;
+      const newNextCursor = hasNextPage
+        ? pets[pets.length - 1].createdAt
+        : null;
 
       return { pets, hasNextPage, nextCursor: newNextCursor };
     } catch (err) {
