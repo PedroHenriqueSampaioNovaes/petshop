@@ -44,6 +44,12 @@ export function PET_SCHEDULE({ id }: { id: string }) {
   };
 }
 
+export function CONCLUDE_ADOPTION({ id }: { id: string }) {
+  return {
+    url: `${BASE_URL}/pets/conclude/${id}`,
+  };
+}
+
 export function LOGIN() {
   return {
     url: `${BASE_URL}/user/session`,

@@ -13,7 +13,7 @@ import MyPetsWrapper from './_components/MyPetsWrapper';
 export default async function MyPetsPage() {
   return (
     <section className="max-w-300 mx-auto">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between max-md:flex-col gap-3">
         <Title>Meus Pets</Title>
         <Link
           href="/pet/add"
