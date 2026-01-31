@@ -1,6 +1,6 @@
 import { IApiGetPets } from './@types/pets';
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL + '/api';
 
 export function GET_PETS({ petsPerPage = 8, nextCursor = null }: IApiGetPets) {
   return {
