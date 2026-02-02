@@ -10,7 +10,7 @@ cloudinary.config({
 const fileFilter = (
   req: any,
   file: Express.Multer.File,
-  cb: multer.FileFilterCallback
+  cb: multer.FileFilterCallback,
 ) => {
   const imageMimetypes = ['image/jpeg', 'image/png', 'image/webp'];
 

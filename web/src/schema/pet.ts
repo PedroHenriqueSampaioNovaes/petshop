@@ -6,12 +6,12 @@ export const petFormSchema = z.object({
     .refine((list) => list.length === 4, 'Selecione quatro imagens')
     .refine((files) => {
       for (const file of files) {
-        if (file.size > 5 * 1024 * 1024) {
+        if (file.size > 2 * 1024 * 1024) {
           return false;
         }
       }
       return true;
-    }, 'O arquivo deve ter no máximo 5MB'),
+    }, 'O arquivo deve ter no máximo 2MB'),
   name: z.string().min(1, 'Nome obrigatório'),
   age: z.string().min(1, 'Idade obrigatória'),
   weight: z.string().min(1, 'Peso obrigatório'),
