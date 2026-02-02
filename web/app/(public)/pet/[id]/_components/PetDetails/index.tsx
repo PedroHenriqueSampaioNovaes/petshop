@@ -38,7 +38,10 @@ export default function PetDetails({ pet }: { pet: IPet }) {
               Idade
             </span>
           </span>
-          {pet.age} ano{pet.age > 1 && 's'}
+
+          <span className="max-lg:text-contrast-primary max-lg:font-semibold">
+            {pet.age} ano{pet.age > 1 && 's'}
+          </span>
         </li>
         <li className="flex max-lg:flex-col items-center lg:gap-4.5">
           <span className="flex flex-col items-center max-lg:mb-2">
@@ -70,7 +73,9 @@ export default function PetDetails({ pet }: { pet: IPet }) {
             </span>
           </span>
 
-          {pet.breed}
+          <span className="max-lg:text-contrast-primary max-lg:font-semibold">
+            {pet.breed}
+          </span>
         </li>
         <li className="flex max-lg:flex-col items-center lg:gap-4.5">
           <span className="flex flex-col items-center max-lg:mb-2">
@@ -85,8 +90,11 @@ export default function PetDetails({ pet }: { pet: IPet }) {
             <span className="lg:hidden text-sm text-back-700 font-medium mt-0.5">
               Gênero
             </span>
-          </span>{' '}
-          {pet.gender === 'male' ? 'Macho' : 'Fêmea'}
+          </span>
+
+          <span className="max-lg:text-contrast-primary max-lg:font-semibold">
+            {pet.gender === 'male' ? 'Macho' : 'Fêmea'}
+          </span>
         </li>
         <li className="flex max-lg:flex-col items-center lg:gap-4.5">
           <span className="flex flex-col items-center max-lg:mb-2">
@@ -97,8 +105,11 @@ export default function PetDetails({ pet }: { pet: IPet }) {
             <span className="lg:hidden text-sm text-back-700 font-medium mt-0.5">
               Castração
             </span>
-          </span>{' '}
-          {pet.castrationStatus ? 'Castrado' : 'Não castrado'}
+          </span>
+
+          <span className="max-lg:text-contrast-primary max-lg:font-semibold">
+            {pet.castrationStatus ? 'Castrado' : 'Não castrado'}
+          </span>
         </li>
         <li className="flex max-lg:flex-col items-center lg:gap-4.5">
           <span className="flex flex-col items-center max-lg:mb-2">
@@ -106,8 +117,11 @@ export default function PetDetails({ pet }: { pet: IPet }) {
             <span className="lg:hidden text-sm text-back-700 font-medium mt-0.5">
               Peso
             </span>
-          </span>{' '}
-          {pet.weight}kg
+          </span>
+
+          <span className="max-lg:text-contrast-primary max-lg:font-semibold">
+            {pet.weight}kg
+          </span>
         </li>
         <li className="flex max-lg:flex-col items-center lg:gap-4.5">
           <span className="flex flex-col items-center max-lg:mb-2">
@@ -118,8 +132,11 @@ export default function PetDetails({ pet }: { pet: IPet }) {
             <span className="lg:hidden text-sm text-back-700 font-medium mt-0.5">
               Localização
             </span>
-          </span>{' '}
-          {pet.location.state}, {pet.location.municipality}
+          </span>
+
+          <span className="max-lg:max-w-37.5 text-center max-lg:text-contrast-primary max-lg:font-semibold">
+            {pet.location.state}, {pet.location.municipality}
+          </span>
         </li>
       </ul>
     </div>
