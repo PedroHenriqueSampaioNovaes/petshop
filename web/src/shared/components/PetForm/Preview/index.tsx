@@ -17,7 +17,7 @@ export default function Preview({ petUrlImages }: PreviewProps) {
   if (files?.length) {
     preview = [];
     const filesArray = Array.from(files);
-    filesArray.forEach((file) => preview.push(URL.createObjectURL(file as Blob)));
+    filesArray.forEach((file) => preview.push(URL.createObjectURL(file)));
   }
 
   if (preview?.length !== 4) return null;
