@@ -1,25 +1,27 @@
 import z from 'zod';
 
+const imagesSchema = z
+  .custom<FileList>((list) => list instanceof FileList, 'Imagem obrigatória')
+  .refine((list) => list.length === 4, 'Selecione quatro imagens')
+  .refine((files) => {
+    for (const file of files) {
+      if (file.size > 1.125 * 1024 * 1024) {
+        return false;
+      }
+    }
+    return true;
+  }, 'O arquivo deve ter no máximo 1.125MB')
+  .refine((files) => {
+    for (const file of files) {
+      if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
+        return false;
+      }
+    }
+    return true;
+  }, 'Formato inválido (apenas .jpg, .png ou .webp)');
+
 export const petFormSchema = z.object({
-  images: z
-    .custom<FileList>((list) => list instanceof FileList, 'Imagem obrigatória')
-    .refine((list) => list.length === 4, 'Selecione quatro imagens')
-    .refine((files) => {
-      for (const file of files) {
-        if (file.size > 1.125 * 1024 * 1024) {
-          return false;
-        }
-      }
-      return true;
-    }, 'O arquivo deve ter no máximo 1.125MB')
-    .refine((files) => {
-      for (const file of files) {
-        if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
-          return false;
-        }
-      }
-      return true;
-    }, 'Formato inválido (apenas .jpg, .png ou .webp)'),
+  images: imagesSchema,
   name: z.string().min(1, 'Nome obrigatório'),
   age: z.string().min(1, 'Idade obrigatória'),
   weight: z.string().min(1, 'Peso obrigatório'),
@@ -37,33 +39,7 @@ export const petFormSchema = z.object({
 
 export const petFormSchemaPartial = petFormSchema
   .omit({ images: true })
-  .extend({
-    images: z
-      .custom<FileList>(
-        (list) => list instanceof FileList,
-        'Imagem obrigatória',
-      )
-      .refine(
-        (list) => list.length === 0 || list.length === 4,
-        'Selecione quatro imagens',
-      )
-      .refine((files) => {
-        for (const file of files) {
-          if (file.size > 1.125 * 1024 * 1024) {
-            return false;
-          }
-        }
-        return true;
-      }, 'O arquivo deve ter no máximo 1.125MB')
-      .refine((files) => {
-        for (const file of files) {
-          if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
-            return false;
-          }
-        }
-        return true;
-      }, 'Formato inválido (apenas .jpg, .png ou .webp)'),
-  });
+  .extend({ images: imagesSchema });
 
 export type PetFormSchema = z.infer<typeof petFormSchema>;
 export type PetFormSchemaPartial = z.infer<typeof petFormSchemaPartial>;
