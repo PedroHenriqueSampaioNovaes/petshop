@@ -6,9 +6,9 @@ export const profileSchema = z
       .any() // Use z.any() to handle FileList safely (avoids SSR issues with instanceof FileList)
       .refine((files) => {
         return (
-          !files || files.length === 0 || files[0].size <= 10 * 1024 * 1024
-        ); // 10MB limit
-      }, 'O arquivo deve ter no máximo 10MB')
+          !files || files.length === 0 || files[0].size <= 4.5 * 1024 * 1024
+        ); // 4.5MB limit
+      }, 'O arquivo deve ter no máximo 4.5MB')
       .refine((files) => {
         return (
           !files ||

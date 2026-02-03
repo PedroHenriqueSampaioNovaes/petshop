@@ -6,12 +6,12 @@ export const petFormSchema = z.object({
     .refine((list) => list.length === 4, 'Selecione quatro imagens')
     .refine((files) => {
       for (const file of files) {
-        if (file.size > 10 * 1024 * 1024) {
+        if (file.size > 1.125 * 1024 * 1024) {
           return false;
         }
       }
       return true;
-    }, 'O arquivo deve ter no máximo 10MB')
+    }, 'O arquivo deve ter no máximo 1.125MB')
     .refine((files) => {
       for (const file of files) {
         if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
@@ -49,12 +49,12 @@ export const petFormSchemaPartial = petFormSchema
       )
       .refine((files) => {
         for (const file of files) {
-          if (file.size > 10 * 1024 * 1024) {
+          if (file.size > 1.125 * 1024 * 1024) {
             return false;
           }
         }
         return true;
-      }, 'O arquivo deve ter no máximo 10MB')
+      }, 'O arquivo deve ter no máximo 1.125MB')
       .refine((files) => {
         for (const file of files) {
           if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
