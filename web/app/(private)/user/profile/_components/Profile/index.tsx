@@ -10,13 +10,16 @@ import toast from 'react-hot-toast';
 
 import { useUser } from '@/src/context/UserContext';
 
-import userUpdate from '@/app/actions/user-update';
+import getToken from '@/app/actions/get-token';
+import removeCacheTag from '@/app/actions/remove-cache-tag';
 
 import Title from '@/src/shared/components/Title';
 import { InputLabel } from '@/src/shared/components/Forms/Input';
 import Button from '@/src/shared/components/Button';
 
 import { profileSchema } from '@/src/schema/profile';
+
+import { USER_UPDATE } from '@/src/common/api';
 
 type ProfileSchema = z.infer<typeof profileSchema>;
 
@@ -56,14 +59,30 @@ export default function Profile() {
       }
     }
 
-    const { ok, error } = await userUpdate(formData);
+    const token = await getToken();
 
-    if (!ok) {
-      toast.error(error);
-      return;
+    const { url } = USER_UPDATE();
+
+    try {
+      const response = await fetch(url, {
+        method: 'PATCH',
+        body: formData,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      }
+
+      await removeCacheTag('update-profile');
+
+      toast.success('Perfil atualizado com sucesso!');
+    } catch (error) {
+      toast.error((error as Error).message);
     }
-
-    toast.success('Perfil atualizado com sucesso!');
   }
 
   return (

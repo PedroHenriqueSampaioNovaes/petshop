@@ -3,11 +3,13 @@
 import { useForm, Resolver, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import toast from 'react-hot-toast';
-import z from 'zod';
 
 import { IState } from '../EditPetWrapper';
 
-import petUpdate from '@/app/actions/pet-update';
+import { PET_UPDATE } from '@/src/common/api';
+
+import getToken from '@/app/actions/get-token';
+import removeCacheTag from '@/app/actions/remove-cache-tag';
 
 import { IPet } from '@/src/common/@types/pets';
 
@@ -54,14 +56,32 @@ export default function EditPet({ states, pet }: EditPetProps) {
       }
     });
 
-    const { ok, error } = await petUpdate(formData, pet._id);
+    const token = await getToken();
 
-    if (!ok) {
-      toast.error(error);
-      return;
+    const { url } = PET_UPDATE({ id: pet._id });
+
+    try {
+      const response = await fetch(url, {
+        method: 'PATCH',
+        body: formData,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      }
+
+      await removeCacheTag('get-mypet', true);
+      await removeCacheTag('get-pet');
+      await removeCacheTag('get-pets');
+
+      toast.success('Pet editado com sucesso!');
+    } catch (error) {
+      toast.error((error as Error).message);
     }
-
-    toast.success('Pet editado com sucesso!');
   }
 
   return (

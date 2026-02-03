@@ -8,5 +8,5 @@ export const multerImageDataSchema = z.object({
   encoding: z.string(),
   mimetype: z.string(),
   buffer: z.instanceof(Buffer),
-  size: z.number(),
+  size: z.number().max(10000000),
 }) satisfies z.ZodType<MulterMemoryFile>;
