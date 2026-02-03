@@ -18,6 +18,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://petshop-web-five.vercel.app/'),
   title: 'Adopt a Pet',
   description:
     'Adote um pet e ajude a encontrar um lar para eles, onde poderão compartilhar muitos momentos felizes.',
