@@ -77,7 +77,7 @@ export default function Profile() {
         throw new Error(responseData.message);
       }
 
-      await removeCacheTag('update-profile');
+      await removeCacheTag('update-profile', true);
 
       toast.success('Perfil atualizado com sucesso!');
     } catch (error) {
