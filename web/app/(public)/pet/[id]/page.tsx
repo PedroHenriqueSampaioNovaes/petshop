@@ -1,10 +1,30 @@
 import { Metadata } from 'next';
 
-export const metadata: Metadata = {
-  title: 'Adopt a Pet - Conheça o PET',
-  description:
-    'Conheça informações detalhadas sobre o PET que você se interessou. Ao clicar em "Eu adoto", você terá que esperar o tutor do animal aceitar a adoção.',
-};
+export async function generateMetadata({
+  params,
+}: IPetPage): Promise<Metadata> {
+  const { id } = await params;
+  const { data: pet, ok } = await petGet({ id });
+
+  if (!ok || !pet) {
+    return {
+      title: 'Pet não encontrado - Adopt a Pet',
+      description: 'O pet que você está procurando não foi encontrado.',
+    };
+  }
+
+  return {
+    title: `Adote o ${pet.name} | ${pet.breed} - Adopt a Pet`,
+    description: `Conheça ${pet.name}, um ${pet.breed} de ${pet.age} ano${
+      pet.age > 1 ? 's' : ''
+    } esperando por um lar em ${pet.location.municipality}, ${
+      pet.location.state
+    }. Clique para saber mais!`,
+    openGraph: {
+      images: [pet.images[0].url],
+    },
+  };
+}
 
 import petGet from '@/app/actions/pet-get';
 
