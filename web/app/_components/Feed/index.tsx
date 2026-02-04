@@ -15,8 +15,8 @@ export default function Feed() {
       <Subtitle>Veja os detalhes de cada um e conheça o tutor deles</Subtitle>
 
       <div className="grid xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 mt-8">
-        {pets.map((pet) => (
-          <Card key={pet._id} {...pet} />
+        {pets.map((pet, index) => (
+          <Card key={pet._id} {...pet} loadingEager={index < 8} />
         ))}
       </div>
 

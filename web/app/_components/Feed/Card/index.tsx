@@ -5,6 +5,10 @@ import { IPet } from '@/src/common/@types/pets';
 
 import { MdOutlineLocationOn } from 'react-icons/md';
 
+interface CardProps extends IPet {
+  loadingEager?: boolean;
+}
+
 export default function Card({
   _id,
   name,
@@ -14,7 +18,8 @@ export default function Card({
   castrationStatus,
   images,
   location,
-}: IPet) {
+  loadingEager = false,
+}: CardProps) {
   return (
     <div className="rounded-2xl overflow-hidden border border-back-300">
       <Image
@@ -22,7 +27,7 @@ export default function Card({
         alt={name}
         width={300}
         height={300}
-        loading="eager"
+        loading={loadingEager ? 'eager' : 'lazy'}
         className="h-45 w-full object-cover"
       />
 
