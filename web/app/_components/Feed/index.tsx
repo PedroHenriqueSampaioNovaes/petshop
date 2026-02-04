@@ -1,19 +1,22 @@
 'use client';
 
-import Subtitle from '@/src/shared/components/Subtitle';
-import Title from '@/src/shared/components/Title';
+import { IPet } from '@/src/common/@types/pets';
+
 import Card from './Card';
 
 import useGetPetsOnInfiniteScroll from '@/src/hooks/useGetPetsOnInfiniteScroll';
 
-export default function Feed() {
-  const { pets, hasNextPage } = useGetPetsOnInfiniteScroll();
+import { IPetsGetResponse } from '@/app/actions/pets-get';
+
+interface FeedProps {
+  petsData: IPetsGetResponse;
+}
+
+export default function Feed({ petsData }: FeedProps) {
+  const { pets, hasNextPage } = useGetPetsOnInfiniteScroll(petsData);
 
   return (
-    <section>
-      <Title className="mb-2.5">Adote um Pet</Title>
-      <Subtitle>Veja os detalhes de cada um e conheça o tutor deles</Subtitle>
-
+    <>
       <div className="grid xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 mt-8">
         {pets.map((pet, index) => (
           <Card key={pet._id} {...pet} loadingEager={index < 8} />
@@ -25,6 +28,6 @@ export default function Feed() {
           Não há pets cadastrados ou disponíveis para adoção no momento
         </p>
       )}
-    </section>
+    </>
   );
 }

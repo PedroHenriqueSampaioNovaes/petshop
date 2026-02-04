@@ -2,15 +2,13 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { IPet } from '@/src/common/@types/pets';
+import petsGet, { IPetsGetResponse } from '@/app/actions/pets-get';
 
-import petsGet from '@/app/actions/pets-get';
+export default function useGetPetsOnInfiniteScroll(petsData: IPetsGetResponse) {
+  const [pets, setPets] = useState(petsData.pets || []);
+  const [hasNextPage, setHasNextPage] = useState(petsData.hasNextPage);
 
-export default function useGetPetsOnInfiniteScroll() {
-  const [pets, setPets] = useState<IPet[]>([]);
-  const [hasNextPage, setHasNextPage] = useState(true);
-
-  const nextCursorRef = useRef<string | null>(null);
+  const nextCursorRef = useRef<string | null>(petsData.nextCursor);
   const isFetchingRef = useRef(false);
 
   const getPets = useCallback(async () => {
@@ -33,10 +31,6 @@ export default function useGetPetsOnInfiniteScroll() {
     nextCursorRef.current = data.nextCursor;
     isFetchingRef.current = false;
   }, []);
-
-  useEffect(() => {
-    getPets();
-  }, [getPets]);
 
   useEffect(() => {
     let wait = false;

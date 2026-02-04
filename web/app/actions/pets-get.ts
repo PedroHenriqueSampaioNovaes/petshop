@@ -12,7 +12,7 @@ interface IPetsGet {
   petsPerPage?: number;
 }
 
-interface IPetsGetResponse {
+export interface IPetsGetResponse {
   pets: IPet[];
   hasNextPage: boolean;
   nextCursor: string | null;
