@@ -88,7 +88,7 @@ export default function PetForm({
         />
 
         <InputLabel
-          label="Raça do pet:"
+          label="Raça do Pet:"
           placeholder="Digite a raça"
           register={register('breed')}
           error={errors.breed?.message as string}
