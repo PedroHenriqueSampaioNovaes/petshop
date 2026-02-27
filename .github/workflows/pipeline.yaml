@@ -1,0 +1,27 @@
+name: CI para testes
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4.4.0
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm install
+        working-test: web
+
+      - name: Run tests
+        run: npm test
+        working-test: web
