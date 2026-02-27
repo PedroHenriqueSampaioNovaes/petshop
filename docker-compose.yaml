@@ -1,0 +1,20 @@
+services:
+  server:
+    build: ./server
+    image: adopt-a-pet-server
+    ports:
+      - '3002:3002'
+    env_file:
+      - server/.env
+
+  web:
+    build: ./web
+    image: adopt-a-pet-web
+    ports:
+      - '3000:3000'
+    env_file:
+      - web/.env
+    environment:
+      - NEXT_PUBLIC_API_URL=http://server:3002
+    depends_on:
+      - server
