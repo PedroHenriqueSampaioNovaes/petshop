@@ -1,6 +1,8 @@
 import { MetadataRoute } from 'next';
 import petsGet from '@/app/actions/pets-get';
 
+export const dynamic = 'force-dynamic';
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://petshop-web-five.vercel.app';
 
