@@ -1,42 +1,39 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect } from 'react';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
-import petsGet, { IPetsGetResponse } from '@/app/actions/pets-get';
+import { IPetsGetResponse } from '@/app/actions/pets-get';
 
 export default function useGetPetsOnInfiniteScroll(petsData: IPetsGetResponse) {
-  const [pets, setPets] = useState(petsData.pets || []);
-  const [hasNextPage, setHasNextPage] = useState(petsData.hasNextPage);
+  async function fetchPets({ pageParam }: { pageParam: string | null }) {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/pets?petsPerPage=8&nextCursor=${pageParam}`,
+    );
+    if (!res.ok)
+      throw new Error('Um erro ocorreu e não foi possível buscar pelos pets');
 
-  const nextCursorRef = useRef<string | null>(petsData.nextCursor);
-  const isFetchingRef = useRef(false);
+    return res.json();
+  }
+
+  const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery({
+    queryKey: ['pets'],
+    queryFn: fetchPets,
+    initialData: { pages: [petsData], pageParams: [null] },
+    initialPageParam: null,
+    getNextPageParam: (lastPage) => lastPage.nextCursor,
+    refetchOnMount: false,
+  });
 
   const getPets = useCallback(async () => {
-    if (isFetchingRef.current) return;
-
-    isFetchingRef.current = true;
-
-    const { data, ok } = await petsGet({
-      nextCursor: nextCursorRef.current,
-    });
-
-    if (!ok) {
-      console.error('Falhou a busca por novos pets');
-      return;
-    }
-
-    setPets((prev) => [...prev, ...data.pets]);
-    setHasNextPage(data.hasNextPage);
-
-    nextCursorRef.current = data.nextCursor;
-    isFetchingRef.current = false;
+    await fetchNextPage();
   }, []);
 
   useEffect(() => {
     let wait = false;
 
     function handleScroll() {
-      if (wait || !hasNextPage) return;
+      if (wait || !hasNextPage || isFetching) return;
 
       const { scrollHeight, scrollTop } = document.documentElement;
       const viewportHeight = window.innerHeight;
@@ -52,13 +49,14 @@ export default function useGetPetsOnInfiniteScroll(petsData: IPetsGetResponse) {
         }, 500);
       }
     }
+    handleScroll();
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [getPets, hasNextPage]);
+  }, [getPets, hasNextPage, isFetching]);
 
   return {
-    pets,
-    hasNextPage,
+    pets: data?.pages.flatMap((page) => page.pets) || [],
+    hasNextPage: hasNextPage,
   };
 }
