@@ -1,7 +1,5 @@
 'use client';
 
-import { IPet } from '@/src/common/@types/pets';
-
 import Card from './Card';
 
 import useGetPetsOnInfiniteScroll from '@/src/hooks/useGetPetsOnInfiniteScroll';
