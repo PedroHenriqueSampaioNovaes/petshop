@@ -1,4 +1,6 @@
 import 'dotenv/config';
+import './db/conn.js';
+
 import cors from 'cors';
 import express from 'express';
 
