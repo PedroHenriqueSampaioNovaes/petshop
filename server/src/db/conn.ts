@@ -18,5 +18,3 @@ async function connectDB(retries = 5) {
   }
 }
 connectDB();
-
-export default mongoose;
