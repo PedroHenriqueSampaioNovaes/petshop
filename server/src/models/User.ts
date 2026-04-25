@@ -1,5 +1,4 @@
-import mongoose from '../db/conn.js';
-const { Schema } = mongoose;
+import mongoose, { Schema } from 'mongoose';
 
 export interface IUser {
   name: string;
@@ -38,7 +37,7 @@ const userSchema = new Schema<IUser>(
       required: true,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const User = mongoose.model<IUser>('User', userSchema);

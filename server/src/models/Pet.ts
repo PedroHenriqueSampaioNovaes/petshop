@@ -1,5 +1,4 @@
-import mongoose from '../db/conn.js';
-const { Schema } = mongoose;
+import mongoose, { Schema } from 'mongoose';
 
 export interface IPet {
   name: string;
@@ -89,7 +88,7 @@ const petSchema = new Schema<IPet>(
     user: Object,
     adopter: Object,
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const Pet = mongoose.model<IPet>('Pet', petSchema);
