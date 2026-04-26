@@ -1,7 +1,6 @@
 import { Router } from 'express';
 
 import isAuthenticated from '../middleware/isAuthenticated.js';
-import { upload } from '../middleware/uploadImage.js';
 
 import { CreateUserController } from '../controllers/user/CreateUserController.js';
 import { LoginUserController } from '../controllers/user/LoginUserController.js';
@@ -15,12 +14,7 @@ router.post('/session', LoginUserController.handle);
 
 router.get('/me', isAuthenticated, DetailUserController.handle);
 
-router.patch(
-  '/',
-  isAuthenticated,
-  upload.single('image'),
-  UpdateUserController.handle
-);
+router.patch('/', isAuthenticated, UpdateUserController.handle);
 
 const baseURL = '/user';
 

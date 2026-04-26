@@ -1,13 +1,12 @@
-import { v2 as cloudinary } from 'cloudinary';
+import cloudinary from '../../lib/cloudinary.js';
 
 import Pet from '../../models/Pet.js';
 
-import { IPetMulterDataRequest } from '../../@types/pet.js';
+import { IUpdatePetData } from '../../@types/pet.js';
 
 import ApiError from '../../utils/ApiError.js';
-import uploadImageToCloudinary from '../../utils/uploadImageToCloudinary.js';
 
-interface UpdatePetData extends IPetMulterDataRequest {
+interface UpdatePetData extends IUpdatePetData {
   petId: string;
   userId: string;
 }
@@ -37,7 +36,7 @@ export class UpdatePetService {
       );
     }
 
-    if (images.length) {
+    if (images?.length) {
       // remove images of the cloudinary
       try {
         for (const image of pet.images) {
@@ -50,17 +49,11 @@ export class UpdatePetService {
         );
       }
 
-      // upload pet images on the cloudinary
-      const uploads = images.map((image) => {
-        return uploadImageToCloudinary(image, 'pets');
-      });
-
-      const uploadedImages = await Promise.all(uploads);
       pet.images = [];
-      uploadedImages.forEach((result) => {
+      images.forEach((img) => {
         pet.images.push({
-          url: result.secure_url,
-          public_id: result.public_id,
+          url: img.url,
+          public_id: img.public_id,
         });
       });
     }

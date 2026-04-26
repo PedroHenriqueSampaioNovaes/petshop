@@ -15,35 +15,25 @@ import { ConcludeAdoptionPetController } from '../controllers/pet/ConcludeAdopti
 
 const router = Router();
 
-router.post(
-  '/create',
-  isAuthenticated,
-  upload.array('images'),
-  CreatePetController.handle
-);
+router.post('/create', isAuthenticated, CreatePetController.handle);
 
 router.get('/', ListAllPetsController.handle);
 router.get('/mypets', isAuthenticated, ListAllUserPetsController.handle);
 router.get(
   '/myadoptions',
   isAuthenticated,
-  AllUserAdoptionsPetController.handle
+  AllUserAdoptionsPetController.handle,
 );
 router.get('/:id', GetPetController.handle);
 
 router.delete('/:id', isAuthenticated, RemovePetController.handle);
 
-router.patch(
-  '/:id',
-  isAuthenticated,
-  upload.array('images'),
-  UpdatePetController.handle
-);
+router.patch('/:id', isAuthenticated, UpdatePetController.handle);
 router.patch('/schedule/:id', isAuthenticated, SchedulePetController.handle);
 router.patch(
   '/conclude/:id',
   isAuthenticated,
-  ConcludeAdoptionPetController.handle
+  ConcludeAdoptionPetController.handle,
 );
 
 const baseURL = '/pets';

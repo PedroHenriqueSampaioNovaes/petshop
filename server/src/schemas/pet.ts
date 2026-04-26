@@ -1,8 +1,13 @@
 import z from 'zod';
 
-import { multerImageDataSchema } from './multer.js';
+import { imageUrlSchema } from './image.js';
 
-export const createPetSchema = z.object({
+export const petImagesUrlSchema = z
+  .array(imageUrlSchema)
+  .min(4, 'É necessário enviar 4 imagens do pet')
+  .max(4, 'É necessário enviar 4 imagens do pet');
+
+export const petSchema = z.object({
   name: z.string().min(2, 'Nome deve ter no mínimo 2 caracteres'),
   age: z.coerce.number().min(1, 'Idade deve ser maior ou igual a 1'),
   weight: z.coerce.number().min(1, 'Peso deve ser maior ou igual a 1'),
@@ -10,6 +15,7 @@ export const createPetSchema = z.object({
     .string()
     .min(40, 'A descrição deve ter no mínimo 40 caracteres')
     .max(300, 'A descrição deve ter no máximo 300 caracteres'),
+  images: petImagesUrlSchema,
   breed: z.string().min(1, 'Raça do pet é obrigatória'),
   gender: z.enum(['male', 'female'], 'Gênero do pet é obrigatório'),
   castrationStatus: z
@@ -21,17 +27,10 @@ export const createPetSchema = z.object({
     .min(1, 'Selecione um município'),
 });
 
-export const petMulterImagesSchema = z
-  .array(multerImageDataSchema)
-  .min(4, 'É necessário enviar 4 imagens do pet')
-  .max(4, 'É necessário enviar 4 imagens do pet');
-
-export const petMulterImagesSchemaPartial = z
-  .array(multerImageDataSchema)
-  .refine(
-    (images) => images.length === 0 || images.length === 4,
-    'É necessário enviar 4 imagens do pet',
-  );
+export const petUpdateSchema = z.object({
+  ...petSchema.shape,
+  images: petImagesUrlSchema.optional(),
+});
 
 export const listPetSchema = z.object({
   petsPerPage: z.coerce

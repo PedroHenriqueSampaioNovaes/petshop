@@ -1,19 +1,16 @@
 import User from '../../models/User.js';
-import { v2 as cloudinary } from 'cloudinary';
+import cloudinary from '../../lib/cloudinary.js';
 
 import ApiError from '../../utils/ApiError.js';
 
-import { MulterMemoryFile } from '../../@types/image.js';
-import uploadImageToCloudinary from '../../utils/uploadImageToCloudinary.js';
 import bcrypt from 'bcryptjs';
 
-interface UserData {
+import { IUserData } from '../../@types/user.js';
+
+interface UserDataRequest extends Omit<IUserData, 'password' | 'confirm'> {
   userId: string;
-  name: string;
-  email: string;
-  phone: string;
   password?: string;
-  image?: MulterMemoryFile;
+  confirm?: string;
 }
 
 export class UpdateUserService {
@@ -24,7 +21,7 @@ export class UpdateUserService {
     phone,
     password,
     image,
-  }: UserData) {
+  }: UserDataRequest) {
     const user = await User.findById(userId);
     if (!user) throw new ApiError('Usuário não encontrado.', 404);
 
@@ -41,6 +38,7 @@ export class UpdateUserService {
         try {
           await cloudinary.uploader.destroy(user.image.public_id as string);
         } catch (error) {
+          console.error(error);
           throw new ApiError(
             'Erro ao tentar deletar a imagem do usuário na núvem.',
             400,
@@ -48,10 +46,8 @@ export class UpdateUserService {
         }
       }
 
-      // upload the new image
-      const upload = await uploadImageToCloudinary(image, 'users');
-      user.image.url = upload.secure_url;
-      user.image.public_id = upload.public_id;
+      user.image.url = image.url;
+      user.image.public_id = image.public_id;
     }
 
     user.name = name;
@@ -70,7 +66,7 @@ export class UpdateUserService {
       const userUpdated = await User.findOneAndUpdate(
         { _id: user._id },
         { $set: user },
-        { new: true },
+        { returnDocument: 'after' },
       );
 
       return { userUpdated, message: 'Usuário atualizado com sucesso!' };

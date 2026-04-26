@@ -1,14 +1,6 @@
-import { MulterMemoryFile } from './image.js';
+import z from 'zod';
 
-export interface IPetMulterDataRequest {
-  name: string;
-  age: number;
-  weight: number;
-  images: MulterMemoryFile[];
-  description: string;
-  breed: string;
-  gender: 'male' | 'female';
-  castrationStatus: boolean;
-  state: string;
-  municipality: string;
-}
+import { petSchema, petUpdateSchema } from '../schemas/pet.js';
+
+export type IPetData = z.infer<typeof petSchema>;
+export type IUpdatePetData = z.infer<typeof petUpdateSchema>;
