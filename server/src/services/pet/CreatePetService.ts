@@ -4,6 +4,7 @@ import User from '../../models/User.js';
 import ApiError from '../../utils/ApiError.js';
 
 import { IPetData } from '../../@types/pet.js';
+import uploadImage from '../../utils/uploadImage.js';
 
 interface CreatePetData extends IPetData {
   userId: string;
@@ -26,6 +27,20 @@ export class CreatePetService {
     const user = await User.findById(userId);
     if (!user) throw new ApiError('Usuário não encontrado!', 401);
 
+    // upload pet images on the cloudinary
+    const uploads = images.map((image) => {
+      return uploadImage(image, 'pets');
+    });
+
+    const imagesData: { url: string; public_id: string }[] = [];
+    const uploadedImages = await Promise.all(uploads);
+    uploadedImages.forEach((result) => {
+      imagesData.push({
+        url: result.secure_url,
+        public_id: result.public_id,
+      });
+    });
+
     const pet = new Pet({
       name,
       age,
@@ -39,7 +54,7 @@ export class CreatePetService {
       },
       description,
       available: true,
-      images,
+      images: imagesData,
       user: {
         _id: user._id,
         name: user.name,

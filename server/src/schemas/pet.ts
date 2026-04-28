@@ -1,9 +1,9 @@
 import z from 'zod';
 
-import { imageUrlSchema } from './image.js';
+import { imageSchema } from './image.js';
 
-export const petImagesUrlSchema = z
-  .array(imageUrlSchema)
+export const petImagesSchema = z
+  .array(imageSchema)
   .min(4, 'É necessário enviar 4 imagens do pet')
   .max(4, 'É necessário enviar 4 imagens do pet');
 
@@ -15,7 +15,7 @@ export const petSchema = z.object({
     .string()
     .min(40, 'A descrição deve ter no mínimo 40 caracteres')
     .max(300, 'A descrição deve ter no máximo 300 caracteres'),
-  images: petImagesUrlSchema,
+  images: petImagesSchema,
   breed: z.string().min(1, 'Raça do pet é obrigatória'),
   gender: z.enum(['male', 'female'], 'Gênero do pet é obrigatório'),
   castrationStatus: z
@@ -29,7 +29,7 @@ export const petSchema = z.object({
 
 export const petUpdateSchema = z.object({
   ...petSchema.shape,
-  images: petImagesUrlSchema.optional(),
+  images: petImagesSchema.optional(),
 });
 
 export const listPetSchema = z.object({

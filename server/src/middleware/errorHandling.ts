@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import z, { ZodError } from 'zod';
+import { MulterError } from 'multer';
 
 import ApiError from '../utils/ApiError.js';
 
@@ -21,6 +22,16 @@ export default function errorHandling(
         z.flattenError(err).formErrors[0] ||
         'Ocorreu um erro ao validar os dados.',
       fields: z.flattenError(err).fieldErrors,
+    });
+    return;
+  }
+
+  if (err instanceof MulterError) {
+    res.status(500).json({
+      ok: false,
+      error:
+        'Ocorreu um erro ao processar a imagem. Certifique-se de ter enviado a quantidade permitida de imagem',
+      fields: [err.field],
     });
     return;
   }

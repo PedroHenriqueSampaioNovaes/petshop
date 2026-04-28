@@ -6,7 +6,7 @@ import { CreatePetService } from '../../services/pet/CreatePetService.js';
 
 export class CreatePetController {
   static async handle(req: Request, res: Response) {
-    const petData = petSchema.parse(req.body);
+    const petData = petSchema.parse({ ...req.body, images: req.files });
 
     const newPet = await CreatePetService.execute({
       userId: req.user_id,

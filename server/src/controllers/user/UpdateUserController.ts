@@ -6,7 +6,10 @@ import { userOptionalPasswordSchema } from '../../schemas/user.js';
 
 export class UpdateUserController {
   static async handle(req: Request, res: Response) {
-    const userData = userOptionalPasswordSchema.parse(req.body);
+    const userData = userOptionalPasswordSchema.parse({
+      ...req.body,
+      image: req.file,
+    });
 
     const userDataUpdated = await UpdateUserService.execute({
       userId: req.user_id,

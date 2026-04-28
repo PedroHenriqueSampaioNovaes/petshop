@@ -5,6 +5,7 @@ import Pet from '../../models/Pet.js';
 import { IUpdatePetData } from '../../@types/pet.js';
 
 import ApiError from '../../utils/ApiError.js';
+import uploadImage from '../../utils/uploadImage.js';
 
 interface UpdatePetData extends IUpdatePetData {
   petId: string;
@@ -49,11 +50,17 @@ export class UpdatePetService {
         );
       }
 
+      // upload pet images on the cloudinary
+      const uploads = images.map((image) => {
+        return uploadImage(image, 'pets');
+      });
+
+      const uploadedImages = await Promise.all(uploads);
       pet.images = [];
-      images.forEach((img) => {
+      uploadedImages.forEach((result) => {
         pet.images.push({
-          url: img.url,
-          public_id: img.public_id,
+          url: result.secure_url,
+          public_id: result.public_id,
         });
       });
     }

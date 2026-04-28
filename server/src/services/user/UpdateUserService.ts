@@ -1,9 +1,11 @@
+import bcrypt from 'bcryptjs';
+
 import User from '../../models/User.js';
+
 import cloudinary from '../../lib/cloudinary.js';
 
 import ApiError from '../../utils/ApiError.js';
-
-import bcrypt from 'bcryptjs';
+import uploadImage from '../../utils/uploadImage.js';
 
 import { IUserData } from '../../@types/user.js';
 
@@ -46,8 +48,10 @@ export class UpdateUserService {
         }
       }
 
-      user.image.url = image.url;
-      user.image.public_id = image.public_id;
+      // upload the new image
+      const upload = await uploadImage(image, 'users');
+      user.image.url = upload.secure_url;
+      user.image.public_id = upload.public_id;
     }
 
     user.name = name;
