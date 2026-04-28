@@ -4,14 +4,8 @@ import Card from './Card';
 
 import useGetPetsOnInfiniteScroll from '@/src/hooks/useGetPetsOnInfiniteScroll';
 
-import { IPetsGetResponse } from '@/app/actions/pets-get';
-
-interface FeedProps {
-  petsData: IPetsGetResponse;
-}
-
-export default function Feed({ petsData }: FeedProps) {
-  const { pets, hasNextPage } = useGetPetsOnInfiniteScroll(petsData);
+export default function Feed() {
+  const { pets, hasNextPage } = useGetPetsOnInfiniteScroll();
 
   return (
     <>

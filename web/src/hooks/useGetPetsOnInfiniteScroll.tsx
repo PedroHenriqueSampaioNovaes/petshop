@@ -1,36 +1,19 @@
 'use client';
 
 import { useCallback, useEffect } from 'react';
-import { QueryFunctionContext, useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
-import { IPetsGetResponse } from '@/app/actions/pets-get';
+import { petsInfiniteQuery } from '../lib/react-query/pets/queries';
 
-export default function useGetPetsOnInfiniteScroll(petsData: IPetsGetResponse) {
-  async function fetchPets({ pageParam }: QueryFunctionContext) {
-    const cursor = pageParam as string | null;
-
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/pets?petsPerPage=8&nextCursor=${cursor}`,
-    );
-    if (!res.ok)
-      throw new Error('Um erro ocorreu e não foi possível buscar pelos pets');
-
-    return res.json();
-  }
-
-  const { data, hasNextPage, fetchNextPage, isFetching } =
-    useInfiniteQuery<IPetsGetResponse>({
-      queryKey: ['pets'],
-      queryFn: fetchPets,
-      initialData: { pages: [petsData], pageParams: [null] },
-      initialPageParam: null,
-      getNextPageParam: (lastPage) => lastPage.nextCursor,
-      refetchOnMount: false,
-    });
+export default function useGetPetsOnInfiniteScroll() {
+  const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery({
+    ...petsInfiniteQuery,
+    refetchOnMount: false,
+  });
 
   const getPets = useCallback(async () => {
     await fetchNextPage();
-  }, []);
+  }, [fetchNextPage]);
 
   useEffect(() => {
     let wait = false;

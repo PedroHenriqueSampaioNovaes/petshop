@@ -7,10 +7,7 @@ import toast from 'react-hot-toast';
 
 import { IState } from '../AddPetWrapper';
 
-import { PET_CREATE } from '@/src/common/api';
-
-import getToken from '@/app/actions/get-token';
-import removeCacheTag from '@/app/actions/remove-cache-tag';
+import petCreate from '@/app/actions/pet-create';
 
 import { petFormSchema, PetFormSchema } from '@/src/schema/pet';
 
@@ -52,26 +49,12 @@ export default function AddPet({ states }: AddPetProps) {
       }
     });
 
-    const token = await getToken();
-
-    const { url } = PET_CREATE();
-
     try {
-      const response = await fetch(url, {
-        method: 'POST',
-        body: formData,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const responseData = await response.json();
+      const { ok, error } = await petCreate(formData);
 
-      if (!response.ok) {
-        throw new Error(responseData.message);
+      if (!ok) {
+        throw new Error(error);
       }
-
-      await removeCacheTag('get-mypet', true);
-      await removeCacheTag('get-pets');
 
       toast.success('Pet cadastrado com sucesso!');
       router.push('/pet/mypets');

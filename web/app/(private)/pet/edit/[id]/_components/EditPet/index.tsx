@@ -6,16 +6,12 @@ import toast from 'react-hot-toast';
 
 import { IState } from '../EditPetWrapper';
 
-import { PET_UPDATE } from '@/src/common/api';
-
-import getToken from '@/app/actions/get-token';
-import removeCacheTag from '@/app/actions/remove-cache-tag';
-
 import { IPet } from '@/src/common/@types/pets';
 
 import { petFormSchemaPartial, PetFormSchemaPartial } from '@/src/schema/pet';
 
 import PetForm from '@/src/shared/components/PetForm';
+import petUpdate from '@/app/actions/pet-update';
 
 interface EditPetProps {
   states: IState[];
@@ -28,7 +24,7 @@ export default function EditPet({ states, pet }: EditPetProps) {
       petFormSchemaPartial,
     ) as Resolver<PetFormSchemaPartial>,
     defaultValues: {
-      images: undefined,
+      images: [] as unknown as FileList,
       name: pet.name,
       age: pet.age.toString(),
       breed: pet.breed,
@@ -45,10 +41,8 @@ export default function EditPet({ states, pet }: EditPetProps) {
     const formData = new FormData();
 
     Object.entries(data).forEach(([key, value]) => {
-      if (value === undefined) return;
-
-      if (value instanceof FileList) {
-        for (const file of value) {
+      if (key === 'images') {
+        for (const file of Array.from(value as FileList)) {
           formData.append(key, file);
         }
       } else {
@@ -56,27 +50,12 @@ export default function EditPet({ states, pet }: EditPetProps) {
       }
     });
 
-    const token = await getToken();
-
-    const { url } = PET_UPDATE({ id: pet._id });
-
     try {
-      const response = await fetch(url, {
-        method: 'PATCH',
-        body: formData,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const responseData = await response.json();
+      const { ok, error } = await petUpdate(formData, pet._id);
 
-      if (!response.ok) {
-        throw new Error(responseData.message);
+      if (!ok) {
+        throw new Error(error);
       }
-
-      await removeCacheTag('get-mypet', true);
-      await removeCacheTag('get-pet');
-      await removeCacheTag('get-pets');
 
       toast.success('Pet editado com sucesso!');
     } catch (error) {

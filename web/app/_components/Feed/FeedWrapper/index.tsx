@@ -1,12 +1,23 @@
-import petsGet from '@/app/actions/pets-get';
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from '@tanstack/react-query';
 
 import Feed from '../';
 
+import { petsInfiniteQuery } from '@/src/lib/react-query/pets/queries';
+
 export default async function FeedWrapper() {
-  const { data, ok } = await petsGet({});
+  const queryClient = new QueryClient();
 
-  if (!ok) return <p>Erro ao buscar os pets.</p>;
-  if (data.pets.length === 0) return <p>Ainda não há adoções de Pets.</p>;
+  const { pages } = await queryClient.fetchInfiniteQuery(petsInfiniteQuery);
 
-  return <Feed petsData={data} />;
+  if (!pages?.length) return <p>Ainda não há adoções de Pets.</p>;
+
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <Feed />
+    </HydrationBoundary>
+  );
 }

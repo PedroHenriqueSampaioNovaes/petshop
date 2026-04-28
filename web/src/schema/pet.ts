@@ -37,9 +37,36 @@ export const petFormSchema = z.object({
   description: z.string().min(40, 'Descrição muito curta'),
 });
 
-export const petFormSchemaPartial = petFormSchema
-  .omit({ images: true })
-  .extend({ images: imagesSchema });
+const MAX_SIZE_IN_MB = 10;
+const MAX_SIZE_IN_BYTES = MAX_SIZE_IN_MB * 1024 * 1024;
+
+export const petFormSchemaPartial = z.object({
+  ...petFormSchema.shape,
+  images: z
+    .custom<FileList>()
+    .refine(
+      (files) => files && (files.length === 0 || files.length === 4),
+      'Selecione quatro imagens',
+    )
+    .refine((files) => {
+      if (!files) return true;
+      for (const file of Array.from(files)) {
+        if (file.size > MAX_SIZE_IN_BYTES) {
+          return false;
+        }
+      }
+      return true;
+    }, `Cada imagem deve ter no máximo ${MAX_SIZE_IN_MB}MB`)
+    .refine((files) => {
+      if (!files) return true;
+      for (const file of Array.from(files)) {
+        if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
+          return false;
+        }
+      }
+      return true;
+    }, 'Formato inválido (apenas .jpg, .png ou .webp)'),
+});
 
 export type PetFormSchema = z.infer<typeof petFormSchema>;
 export type PetFormSchemaPartial = z.infer<typeof petFormSchemaPartial>;

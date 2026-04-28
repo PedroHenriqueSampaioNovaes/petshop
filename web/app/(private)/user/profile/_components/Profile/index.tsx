@@ -10,7 +10,6 @@ import toast from 'react-hot-toast';
 
 import { useUser } from '@/src/context/UserContext';
 
-import getToken from '@/app/actions/get-token';
 import removeCacheTag from '@/app/actions/remove-cache-tag';
 
 import Title from '@/src/shared/components/Title';
@@ -19,7 +18,7 @@ import Button from '@/src/shared/components/Button';
 
 import { profileSchema } from '@/src/schema/profile';
 
-import { USER_UPDATE } from '@/src/common/api';
+import userUpdate from '@/app/actions/user-update';
 
 type ProfileSchema = z.infer<typeof profileSchema>;
 
@@ -54,27 +53,21 @@ export default function Profile() {
     const formData = new FormData();
 
     for (const [key, value] of Object.entries(data)) {
-      if (value) {
-        formData.append(key, value);
+      if (!value) continue;
+
+      if (key === 'image') {
+        const files = Array.from(value as FileList);
+        if (files.length > 0) formData.append(key, files[0]);
+      } else {
+        formData.append(key, value as string);
       }
     }
 
-    const token = await getToken();
-
-    const { url } = USER_UPDATE();
-
     try {
-      const response = await fetch(url, {
-        method: 'PATCH',
-        body: formData,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const responseData = await response.json();
+      const { ok, error } = await userUpdate(formData);
 
-      if (!response.ok) {
-        throw new Error(responseData.message);
+      if (!ok) {
+        throw new Error(error);
       }
 
       await removeCacheTag('update-profile', true);
