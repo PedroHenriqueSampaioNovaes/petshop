@@ -1,7 +1,6 @@
 import { Router } from 'express';
 
 import isAuthenticated from '../middleware/isAuthenticated.js';
-import { upload } from '../middleware/uploadImage.js';
 
 import { CreatePetController } from '../controllers/pet/CreatePetController.js';
 import { ListAllPetsController } from '../controllers/pet/ListAllPetsController.js';
