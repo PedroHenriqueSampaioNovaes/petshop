@@ -21,7 +21,7 @@ export interface IPetsGetResponse {
 export default async function petsGet({
   petsPerPage = 8,
   nextCursor = null,
-}: IPetsGet) {
+}: IPetsGet = {}) {
   try {
     const { url } = GET_PETS({ petsPerPage, nextCursor });
     const data = await FetchApi.get<IPetsGetResponse>(url, {
