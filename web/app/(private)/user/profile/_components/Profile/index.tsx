@@ -11,14 +11,17 @@ import toast from 'react-hot-toast';
 import { useUser } from '@/src/context/UserContext';
 
 import removeCacheTag from '@/app/actions/remove-cache-tag';
+import getToken from '@/app/actions/get-token';
+
+import { USER_UPDATE } from '@/src/common/api';
+
+import FetchApi from '@/src/common/utils/FetchApi';
 
 import Title from '@/src/shared/components/Title';
 import { InputLabel } from '@/src/shared/components/Forms/Input';
 import Button from '@/src/shared/components/Button';
 
 import { profileSchema } from '@/src/schema/profile';
-
-import userUpdate from '@/app/actions/user-update';
 
 type ProfileSchema = z.infer<typeof profileSchema>;
 
@@ -63,12 +66,14 @@ export default function Profile() {
       }
     }
 
-    try {
-      const { ok, error } = await userUpdate(formData);
+    const token = await getToken();
+    const { url } = USER_UPDATE();
 
-      if (!ok) {
-        throw new Error(error);
-      }
+    try {
+      await FetchApi.patch(url, {
+        body: formData,
+        token,
+      });
 
       await removeCacheTag('update-profile', true);
 

@@ -8,10 +8,16 @@ import { IState } from '../EditPetWrapper';
 
 import { IPet } from '@/src/common/@types/pets';
 
+import FetchApi from '@/src/common/utils/FetchApi';
+
+import getToken from '@/app/actions/get-token';
+import removeCacheTag from '@/app/actions/remove-cache-tag';
+
+import { PET_UPDATE } from '@/src/common/api';
+
 import { petFormSchemaPartial, PetFormSchemaPartial } from '@/src/schema/pet';
 
 import PetForm from '@/src/shared/components/PetForm';
-import petUpdate from '@/app/actions/pet-update';
 
 interface EditPetProps {
   states: IState[];
@@ -50,12 +56,19 @@ export default function EditPet({ states, pet }: EditPetProps) {
       }
     });
 
-    try {
-      const { ok, error } = await petUpdate(formData, pet._id);
+    const token = await getToken();
 
-      if (!ok) {
-        throw new Error(error);
-      }
+    const { url } = PET_UPDATE({ id: pet._id });
+
+    try {
+      await FetchApi.patch(url, {
+        body: formData,
+        token,
+      });
+
+      await removeCacheTag('get-mypet', true);
+      await removeCacheTag('get-pet');
+      await removeCacheTag('get-pets');
 
       toast.success('Pet editado com sucesso!');
     } catch (error) {

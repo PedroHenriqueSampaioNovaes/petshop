@@ -1,16 +1,19 @@
 import z from 'zod';
 
+const MAX_SIZE_IN_MB = 10;
+const MAX_SIZE_IN_BYTES = MAX_SIZE_IN_MB * 1024 * 1024;
+
 const imagesSchema = z
   .custom<FileList>((list) => list instanceof FileList, 'Imagem obrigatória')
   .refine((list) => list.length === 4, 'Selecione quatro imagens')
   .refine((files) => {
-    for (const file of files) {
-      if (file.size > 1.125 * 1024 * 1024) {
+    for (const file of Array.from(files)) {
+      if (file.size > MAX_SIZE_IN_BYTES) {
         return false;
       }
     }
     return true;
-  }, 'O arquivo deve ter no máximo 1.125MB')
+  }, `Cada imagem deve ter no máximo ${MAX_SIZE_IN_MB}MB`)
   .refine((files) => {
     for (const file of files) {
       if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
@@ -36,9 +39,6 @@ export const petFormSchema = z.object({
     .min(1, 'Selecione um município'),
   description: z.string().min(40, 'Descrição muito curta'),
 });
-
-const MAX_SIZE_IN_MB = 10;
-const MAX_SIZE_IN_BYTES = MAX_SIZE_IN_MB * 1024 * 1024;
 
 export const petFormSchemaPartial = z.object({
   ...petFormSchema.shape,

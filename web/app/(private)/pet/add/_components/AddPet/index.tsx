@@ -6,8 +6,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import toast from 'react-hot-toast';
 
 import { IState } from '../AddPetWrapper';
+import { PET_CREATE } from '@/src/common/api';
 
-import petCreate from '@/app/actions/pet-create';
+import removeCacheTag from '@/app/actions/remove-cache-tag';
+import getToken from '@/app/actions/get-token';
+
+import FetchApi from '@/src/common/utils/FetchApi';
 
 import { petFormSchema, PetFormSchema } from '@/src/schema/pet';
 
@@ -49,12 +53,18 @@ export default function AddPet({ states }: AddPetProps) {
       }
     });
 
-    try {
-      const { ok, error } = await petCreate(formData);
+    const token = await getToken();
 
-      if (!ok) {
-        throw new Error(error);
-      }
+    const { url } = PET_CREATE();
+
+    try {
+      await FetchApi.post(url, {
+        body: formData,
+        token,
+      });
+
+      await removeCacheTag('get-mypet', true);
+      await removeCacheTag('get-pets');
 
       toast.success('Pet cadastrado com sucesso!');
       router.push('/pet/mypets');
