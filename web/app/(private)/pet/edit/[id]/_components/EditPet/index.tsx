@@ -10,14 +10,17 @@ import { IPet } from '@/src/common/@types/pets';
 
 import FetchApi from '@/src/common/utils/FetchApi';
 
-import getToken from '@/app/actions/get-token';
 import removeCacheTag from '@/app/actions/remove-cache-tag';
 
 import { PET_UPDATE } from '@/src/common/api';
 
 import { petFormSchemaPartial, PetFormSchemaPartial } from '@/src/schema/pet';
 
+import { uploadMany } from '@/src/common/utils/uploadMany';
+import { IUploadedFile } from '@/src/common/@types/upload';
+
 import PetForm from '@/src/shared/components/PetForm';
+import getToken from '@/app/actions/get-token';
 
 interface EditPetProps {
   states: IState[];
@@ -44,25 +47,31 @@ export default function EditPet({ states, pet }: EditPetProps) {
   });
 
   async function onSubmit(data: PetFormSchemaPartial) {
-    const formData = new FormData();
-
-    Object.entries(data).forEach(([key, value]) => {
-      if (key === 'images') {
-        for (const file of Array.from(value as FileList)) {
-          formData.append(key, file);
-        }
-      } else {
-        formData.append(key, value as string);
-      }
-    });
+    const petData: Omit<PetFormSchemaPartial, 'images'> & {
+      images: IUploadedFile[];
+    } = { ...data, images: [] };
 
     const token = await getToken();
 
     const { url } = PET_UPDATE({ id: pet._id });
 
     try {
+      if (data.images.length) {
+        const images = await uploadMany(data.images, 'pets');
+        images.forEach(
+          (image) =>
+            (petData.images = [
+              ...petData.images,
+              { public_id: image.public_id, secure_url: image.secure_url },
+            ]),
+        );
+      }
+
       await FetchApi.patch(url, {
-        body: formData,
+        body: JSON.stringify(petData),
+        headers: {
+          'Content-Type': 'application/json',
+        },
         token,
       });
 

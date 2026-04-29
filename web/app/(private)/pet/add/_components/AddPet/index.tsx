@@ -5,6 +5,8 @@ import { useForm, Resolver, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import toast from 'react-hot-toast';
 
+import { IUploadedFile } from '@/src/common/@types/upload';
+
 import { IState } from '../AddPetWrapper';
 import { PET_CREATE } from '@/src/common/api';
 
@@ -12,6 +14,7 @@ import removeCacheTag from '@/app/actions/remove-cache-tag';
 import getToken from '@/app/actions/get-token';
 
 import FetchApi from '@/src/common/utils/FetchApi';
+import { uploadMany } from '@/src/common/utils/uploadMany';
 
 import { petFormSchema, PetFormSchema } from '@/src/schema/pet';
 
@@ -41,25 +44,31 @@ export default function AddPet({ states }: AddPetProps) {
   const router = useRouter();
 
   async function onSubmit(data: PetFormSchema) {
-    const formData = new FormData();
-
-    Object.entries(data).forEach(([key, value]) => {
-      if (value instanceof FileList) {
-        for (const file of value) {
-          formData.append(key, file);
-        }
-      } else {
-        formData.append(key, value);
-      }
-    });
+    const petData: Omit<PetFormSchema, 'images'> & {
+      images: IUploadedFile[];
+    } = { ...data, images: [] };
 
     const token = await getToken();
 
     const { url } = PET_CREATE();
 
     try {
+      if (data.images.length) {
+        const images = await uploadMany(data.images, 'pets');
+        images.forEach(
+          (image) =>
+            (petData.images = [
+              ...petData.images,
+              { public_id: image.public_id, secure_url: image.secure_url },
+            ]),
+        );
+      }
+
       await FetchApi.post(url, {
-        body: formData,
+        body: JSON.stringify(petData),
+        headers: {
+          'Content-Type': 'application/json',
+        },
         token,
       });
 

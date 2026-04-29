@@ -1,4 +1,5 @@
 import { IApiGetPets } from './@types/pets';
+import { IUploadFolder } from './@types/upload';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL + '/api';
 
@@ -77,5 +78,11 @@ export function USER_ADOPTIONS() {
 export function USER_UPDATE() {
   return {
     url: `${BASE_URL}/user`,
+  };
+}
+
+export function SIGNATURE_GET(folder: IUploadFolder) {
+  return {
+    url: `${BASE_URL}/images/generate-signature/${folder}`,
   };
 }

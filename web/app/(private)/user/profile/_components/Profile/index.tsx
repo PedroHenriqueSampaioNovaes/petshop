@@ -13,9 +13,12 @@ import { useUser } from '@/src/context/UserContext';
 import removeCacheTag from '@/app/actions/remove-cache-tag';
 import getToken from '@/app/actions/get-token';
 
+import { IUploadedFile } from '@/src/common/@types/upload';
+
 import { USER_UPDATE } from '@/src/common/api';
 
 import FetchApi from '@/src/common/utils/FetchApi';
+import { uploadSingle } from '@/src/common/utils/uploadSingle';
 
 import Title from '@/src/shared/components/Title';
 import { InputLabel } from '@/src/shared/components/Forms/Input';
@@ -53,25 +56,38 @@ export default function Profile() {
   }
 
   async function onSubmit(data: ProfileSchema) {
-    const formData = new FormData();
+    const userData: Omit<ProfileSchema, 'image'> & {
+      image: IUploadedFile | undefined;
+    } = {
+      email: data.email,
+      name: data.name,
+      phone: data.phone,
+      image: undefined,
+    };
 
-    for (const [key, value] of Object.entries(data)) {
-      if (!value) continue;
-
-      if (key === 'image') {
-        const files = Array.from(value as FileList);
-        if (files.length > 0) formData.append(key, files[0]);
-      } else {
-        formData.append(key, value as string);
-      }
+    if (data.password && data.confirm) {
+      userData.password = data.password;
+      userData.confirm = data.confirm;
     }
 
     const token = await getToken();
     const { url } = USER_UPDATE();
 
     try {
+      const imageFile = data.image?.item(0);
+      if (imageFile) {
+        const image = await uploadSingle(imageFile, 'users');
+        userData.image = {
+          public_id: image.public_id,
+          secure_url: image.secure_url,
+        };
+      }
+
       await FetchApi.patch(url, {
-        body: formData,
+        body: JSON.stringify(userData),
+        headers: {
+          'Content-Type': 'application/json',
+        },
         token,
       });
 
