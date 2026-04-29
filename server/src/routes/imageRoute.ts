@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 import isAuthenticated from '../middleware/isAuthenticated.js';
 
-import { GenerateSignatureImageController } from '../controllers/image/generateSignatureImageController.js';
+import { GenerateSignatureImageController } from '../controllers/image/GenerateSignatureImageController.js';
 
 const router = Router();
 

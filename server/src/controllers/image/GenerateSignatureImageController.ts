@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { Request, Response } from 'express';
 
-import { GenerateSignatureImageService } from '../../services/image/GenerateSignatureImageController.js';
+import { GenerateSignatureImageService } from '../../services/image/GenerateSignatureImageService.js';
 
 export class GenerateSignatureImageController {
   static async handle(req: Request, res: Response) {

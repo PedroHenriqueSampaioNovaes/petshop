@@ -1,11 +1,11 @@
 import cloudinary from '../../lib/cloudinary.js';
 
-interface AdoptionsPetData {
+interface GenerateSignatureImageData {
   folder: 'pets' | 'users';
 }
 
 export class GenerateSignatureImageService {
-  static async execute({ folder }: AdoptionsPetData) {
+  static async execute({ folder }: GenerateSignatureImageData) {
     const folderPath = `petshop-portfolio/${folder}`;
 
     const timestamp = Math.floor(Date.now() / 1000);
