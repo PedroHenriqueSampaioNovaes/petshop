@@ -8,7 +8,7 @@ import { UpdatePetService } from '../../services/pet/UpdatePetService.js';
 export class UpdatePetController {
   static async handle(req: Request, res: Response) {
     const petId = z.string('O ID do pet é obrigatório').parse(req.params.id);
-    const petData = petUpdateSchema.parse({ ...req.body, images: req.files });
+    const petData = petUpdateSchema.parse(req.body);
 
     const result = await UpdatePetService.execute({
       petId,

@@ -1,7 +1,6 @@
 import { Router } from 'express';
 
 import isAuthenticated from '../middleware/isAuthenticated.js';
-import { upload } from '../middleware/uploadImage.js';
 
 import { CreatePetController } from '../controllers/pet/CreatePetController.js';
 import { ListAllPetsController } from '../controllers/pet/ListAllPetsController.js';
@@ -15,12 +14,7 @@ import { ConcludeAdoptionPetController } from '../controllers/pet/ConcludeAdopti
 
 const router = Router();
 
-router.post(
-  '/create',
-  isAuthenticated,
-  upload.array('images'),
-  CreatePetController.handle,
-);
+router.post('/create', isAuthenticated, CreatePetController.handle);
 
 router.get('/', ListAllPetsController.handle);
 router.get('/mypets', isAuthenticated, ListAllUserPetsController.handle);
@@ -33,12 +27,7 @@ router.get('/:id', GetPetController.handle);
 
 router.delete('/:id', isAuthenticated, RemovePetController.handle);
 
-router.patch(
-  '/:id',
-  isAuthenticated,
-  upload.array('images'),
-  UpdatePetController.handle,
-);
+router.patch('/:id', isAuthenticated, UpdatePetController.handle);
 router.patch('/schedule/:id', isAuthenticated, SchedulePetController.handle);
 router.patch(
   '/conclude/:id',

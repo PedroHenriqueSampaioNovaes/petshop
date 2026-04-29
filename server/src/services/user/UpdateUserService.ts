@@ -5,7 +5,6 @@ import User from '../../models/User.js';
 import cloudinary from '../../lib/cloudinary.js';
 
 import ApiError from '../../utils/ApiError.js';
-import uploadImage from '../../utils/uploadImage.js';
 
 import { IUserData } from '../../@types/user.js';
 
@@ -48,10 +47,8 @@ export class UpdateUserService {
         }
       }
 
-      // upload the new image
-      const upload = await uploadImage(image, 'users');
-      user.image.url = upload.secure_url;
-      user.image.public_id = upload.public_id;
+      user.image.url = image.secure_url;
+      user.image.public_id = image.public_id;
     }
 
     user.name = name;
