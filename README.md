@@ -38,7 +38,7 @@ https://petshop-web-five.vercel.app/
 ![login](https://github.com/user-attachments/assets/58bcc151-6501-460a-8b0c-869f4f6422b7)
 #### Perfil
 ![perfil](https://github.com/user-attachments/assets/3f4f6547-51ca-4eeb-8b61-a0f167171e8c)
-#### Meus Pets
+#### Criação de pet
 ![meus pets](https://github.com/user-attachments/assets/48710732-b1e1-42c5-b2ba-67b60ad61b79)
 #### Adoção de pet
 ![adoção](https://github.com/user-attachments/assets/f3403d9a-60f3-443a-b57a-5e325e2edce5)
