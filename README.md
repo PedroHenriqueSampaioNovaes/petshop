@@ -30,7 +30,7 @@ Plataforma de adoção de pets: usuários cadastram animais disponíveis para ad
 https://petshop-web-five.vercel.app/
 
 ## Screenshot GIF
-### Feed - Sem estar numa conta
+#### Feed - Sem estar numa conta
 ![feed](https://github.com/user-attachments/assets/d03cb1de-af67-475e-bda0-c913790bd0f3)
 #### Criação de conta
 ![registro](https://github.com/user-attachments/assets/236ba220-e77f-445f-b702-5625b15a15e1)
