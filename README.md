@@ -4,6 +4,7 @@ Plataforma de adoção de pets: usuários cadastram animais disponíveis para ad
 
 - [Funcionalidades](#funcionalidades)
 - [Link do Projeto](#link)
+- [Screenshot GIF](#screenshot-gif)
 - [Stack](#stack)
 - [Arquitetura](#arquitetura)
 - [Melhorias futuras](#melhorias-futuras)
@@ -27,6 +28,22 @@ Plataforma de adoção de pets: usuários cadastram animais disponíveis para ad
 
 ## Link
 https://petshop-web-five.vercel.app/
+
+## Screenshot GIF
+### Feed - Sem estar numa conta
+![feed](https://github.com/user-attachments/assets/d03cb1de-af67-475e-bda0-c913790bd0f3)
+#### Criação de conta
+![registro](https://github.com/user-attachments/assets/236ba220-e77f-445f-b702-5625b15a15e1)
+#### Entrar na conta
+![login](https://github.com/user-attachments/assets/58bcc151-6501-460a-8b0c-869f4f6422b7)
+#### Perfil
+![perfil](https://github.com/user-attachments/assets/3f4f6547-51ca-4eeb-8b61-a0f167171e8c)
+#### Meus Pets
+![meus pets](https://github.com/user-attachments/assets/48710732-b1e1-42c5-b2ba-67b60ad61b79)
+#### Adoção de pet
+![adoção](https://github.com/user-attachments/assets/f3403d9a-60f3-443a-b57a-5e325e2edce5)
+#### Conclusão da adoção
+![conclusão da adoção](https://github.com/user-attachments/assets/fa9507a1-9fd0-4340-80c3-ffdcebdcdb99)
 
 ## Stack
 
